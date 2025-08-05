@@ -1,7 +1,7 @@
 # Contribution to Give
 Welcome! We're excited you're interested in contributing to Give, a project developed by Pink Yoshi Technologies for the University of Auckland's SOFTENG 310 course. This document outlines the process for filing bug reports, suggesting features, submitting pull requests, and more.
 
-> Note: Please read our Code of Conduct before participating.
+> Note: Please read our [Code of Conduct](./CODE_OF_CONDUCT.md) before participating.
 
 ## How to File a Bug Report
 1. Go to the [Issues](./issues) tab.
@@ -13,17 +13,17 @@ Welcome! We're excited you're interested in contributing to Give, a project deve
    * Environment (OS, browser, etc.)
 4. Check for duplicates before submitting.
 5. Tag your issue with the `bug` label.
-6. A team member willr eview and approve the issue before anyone begins work.
+6. A team member will review and approve the issue before anyone begins work.
 
 ## How to Suggest a New Feature
-1. Go to the Issues tab.
+1. Go to the [Issues](./issues) tab.
 2. Click **New Issue** and select **Feature Request**.
 3. Clearly describe:
    * What you'd like to see
    * Why it's valuable
    * Any dependencies
 4. Label your issue with `enhancement`.
-5. The team will evaluate it during our weekly meeting and mark it as approved of accepted.
+5. The team will evaluate it during our weekly meeting and mark it as approved or accepted.
 
 ## How to Submit a Pull Request (PR)
 > You **must** be assigned to an approved issue before starting a PR.
@@ -73,7 +73,7 @@ We do _not_ accept:
 ## Newcomer-Friendly Contributions
 * Look for issues with the `good first issue` label
 * These are great starting points with mentoring available
-* Join our [weekly group meeting] (see wiki) or ask questions in issue comments
+* Join our [weekly group meeting] (see [wiki](../../wiki)) or ask questions in issue comments
 
 ## Technical Contribution Requirements
 * Each code contribution **must include relevant tests**
@@ -87,7 +87,7 @@ Our goal is to develop a robust and maintainable web app for Give in **A1**, ena
 Key upcoming milestones:
 * MVP complete by August 22.
 * Wiki maintained with up-to-date architecture and contribution summaries.
-See our project proposal and issue board for a breakdown of features by phase.
+See the [wiki](../../wiki) and issue board for a breakdown of features by phase.
 
 ## Architecture Overview
 The system consists of the following high-level components:
@@ -101,7 +101,7 @@ Data Layer (Firebase)
 For more, visit the wiki.
 
 ## Ground Rules and Etiquette
-* Be respectful and inclusive - see our Code of Conduct
+* Be respectful and inclusive - see our [Code of Conduct](./CODE_OF_CONDUCT.md)
 * Use issue comments and PR discussions to coordinate
 * Only work on assigned and approved issues
 * One open claimed issue per contributor at a time
@@ -110,4 +110,4 @@ For more, visit the wiki.
 ## Getting in touch
 * Please **do not email** individual team members
 * Use GitHub Issues and Pull Request comments for all communication
-* For group coordination, refer to weekly meeting notes in the wiki.
+* For group coordination, refer to weekly meeting notes in the [wiki](../../wiki).
