@@ -12,6 +12,8 @@ and orientation.
 We pledge to act and interact in ways that contribute to an open, welcoming,
 diverse, inclusive, and healthy community.
 
+> Note: For detailed information on how to contribute to this project, please see our [Contributor Guidelines](./CONTRIBUTING.md), which work alongside this Code of Conduct.
+
 ## Our Standards
 
 Examples of behavior that contributes to a positive environment for our
