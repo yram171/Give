@@ -1,7 +1,13 @@
 import logo from './assets/logo.svg';
 import './styles/App.css';
+import PollOnPost from './components/PollBox';
+import React, { useEffect, useState } from 'react';
 
 function App() {
+
+  const [options, setOptions] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   return (
     <div className="App">
       <header className="App-header">
