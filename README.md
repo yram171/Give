@@ -12,6 +12,26 @@ This project is associated with the **University of Auckland SOFTENG 310** cours
 **Give** is designed for people who struggle with indecision and want instant feedback from their trusted circles. Instead of endless back-and-forth messages or being stuck in choice paralysis, users can post a poll and get clear, visual input from their groups. It’s a fun, social way to make everyday decisions easier, while also fostering engagement and interaction within communities.
 
 ## How do I get started? Including pre-requisites, install instructions, and how to test/deploy the project (if relevant)
+**Getting Started**
+The following should be installed: 
+- Node.js
+- npm (comes with Node.js)
+- Git
+ 
+**Clone the repository**
+   ```
+   git clone https://github.com/Pink-Yoshi-Technologies/Give.git
+   cd Give
+   ```
+
+**Install dependencies**
+   * JavaScript: `npm install`
+  
+**Run the app locally**
+   `npm start` 
+
+**
+  
 
 ## License
 This project is licensed under the **MIT License**.
@@ -21,4 +41,20 @@ This means you are free to use, copy, modify, merge, publish, distribute, sublic
 For full license details, refer to the [LICENSE](LICENSE) file in this repository.
 
 ## What versions are available?
+We use semantic versioning (`MAJOR.MINOR.PATCH`) for all our releases.
+
+Currently we only have 1 version available 
+
+| Version | Status     | Notes                   |
+|---------|------------|-------------------------|
+| v1.0.0  | Stable     | Initial public release  |
+
+
 ## Where can I get more help, if I need it?
+We have multiple resources for providing help if need be. 
+**Wiki:** [wiki](../../wiki)
+Our Wiki includes additional documentation and outlines how to use the project. 
+
+**Issues**  If you run into bugs or have feature requests, please check the [issues](./issues) page or create a new one.
+
+We encourage communication through Github Pages and creating new Issues. 
