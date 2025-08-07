@@ -8,5 +8,18 @@ const PollOnPost = ({ initialOptions }) => {
       return acc;
     }, {})
   );
+
+  const [totalVotes, setTotalVotes] = useState(0);
+  const [hasVoted, setHasVoted] = useState(false);
+
+  const handleVote = (optionLabel) => {
+    if (hasVoted) return;  // Prevent multiple votes for now
+    setVotes((prevVotes) => ({
+      ...prevVotes,
+      [optionLabel]: prevVotes[optionLabel] + 1,
+    }));
+    setTotalVotes((prevTotal) => prevTotal + 1);
+    setHasVoted(true);
+  };
 }
 
