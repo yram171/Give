@@ -21,5 +21,9 @@ const PollOnPost = ({ initialOptions }) => {
     setTotalVotes((prevTotal) => prevTotal + 1);
     setHasVoted(true);
   };
+  const getPercentage = (optionLabel) => {
+    if (totalVotes === 0) return 0;
+    return Math.round((votes[optionLabel] / totalVotes) * 100);
+  };
 }
 
