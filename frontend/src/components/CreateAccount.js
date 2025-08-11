@@ -31,7 +31,7 @@ const CreateAccount = () => {
                 <p className="text-left text-lg font-extrabold text-gray-900">
                     Create Account
                 </p>
-                <div className="mx-10 space-y-4 flex-1 pb-8">
+                <div className="mt-8 mx-10 space-y-4 flex-1 pb-8">
                     <div className="space-y-4">
                         {/* First Name and Last Name */}
                         <div className="grid grid-cols-2 gap-4">
