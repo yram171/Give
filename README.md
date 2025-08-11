@@ -23,15 +23,12 @@ The following should be installed:
    git clone https://github.com/Pink-Yoshi-Technologies/Give.git
    cd Give
    ```
-
+   
 **Install dependencies**
    * JavaScript: `npm install`
   
 **Run the app locally**
    `npm start` 
-
-**
-  
 
 ## License
 This project is licensed under the **MIT License**.
