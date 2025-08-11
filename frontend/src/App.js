@@ -1,20 +1,38 @@
 import React, { useState, useEffect } from "react";
 import Post from "./components/Post";
-import postDataJson from "./data/postData.json";
 import logo from './assets/logo.svg';
 import './styles/App.css';
 
 function App() {
     const [postData, setPostData] = useState(null);
 
-  useEffect(() => {
-    // Simulating API fetch by reading local JSON
-    setPostData(postDataJson);
-  }, []);
+    useEffect(() => {
+        const fetchPostData = async () => {
+          try {
+            const response = await fetch("http://localhost:5001/postData"); // your backend endpoint here
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            setPostData(data);
+          } catch (error) {
+            console.error("Failed to fetch post data:", error);
+          } finally {
+            setLoading(false);
+          }
+        };
 
-  if (!postData) {
-    return <p>Loading...</p>;
-  }
+        fetchPostData();
+      }, []);
+
+      if (loading) {
+        return <p>Loading...</p>;
+      }
+
+      if (!postData) {
+        return <p>No data available.</p>;
+      }
+
 
   return (
     <div className="App">
@@ -36,5 +54,36 @@ function App() {
   );
 }
 
-export default App;
+  return (
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          Edit <code>src/App.js</code> and save to reload.
+        </p>
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </a>
+      </header>
 
+      {/* Post Content*/}
+      <div className="p-4">
+        <Post
+          username={postData.username}
+          groupName={postData.groupName}
+          timeLeft={postData.timeLeft}
+          question={postData.question}
+          profilePic={postData.profilePic}
+          images={postData.images}
+          pollOptions={postData.pollOptions}
+        />
+      </div>
+    </div>
+  );
+
+export default App;
