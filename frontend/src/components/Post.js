@@ -19,9 +19,16 @@ export default function Post({
               alt={`${username} profile`}
               className="w-10 h-10 rounded-full object-cover"
             />
+            <div>
+              <p className="font-bold">@{username}</p>
+              <p className="text-sm text-black">
+                posted to <span className="font-semibold">{groupName}</span>
+              </p>
+            </div>
           </div>
+          <span className="text-darkGrey text-sm">{timeLeft} left</span>
         </div>
-      </div>
 
+          </div>
   );
 }
