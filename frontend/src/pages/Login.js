@@ -1,7 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../styles/Login.css';
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
 
 const Login = () => {
+  const [emailOrPhone, setEmailOrPhone] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+
+  const handleLogin = async () => {
+    try {
+      await signInWithEmailAndPassword(auth, emailOrPhone, password);
+      console.log("Logged in successfully");
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
   return (
     <div className="login-container">
       <div className="left-side">
@@ -19,13 +34,18 @@ const Login = () => {
             type="text"
             placeholder="Email or Phone Number"
             className="login-input"
+            value={emailOrPhone}
+            onChange={(e) => setEmailOrPhone(e.target.value)}
           />
           <input
             type="password"
             placeholder="Password"
             className="login-input"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
-          <button className="login-btn">Log In</button>
+          {error && <p style={{ color: 'red', fontSize: '0.9rem' }}>{error}</p>}
+          <button className="login-btn" onClick={handleLogin}>Log In</button>
           <button className="forgot-btn">Forgot Account?</button>
           <button className="create-btn">Create Account</button>
         </div>
