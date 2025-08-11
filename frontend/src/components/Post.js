@@ -11,9 +11,17 @@ export default function Post({
   pollOptions
 }) {
   return (
-    <div className="bg-[#F5F3F3] p-3 rounded-lg max-w-md mx-auto">
-      <div className="bg-white rounded-xl shadow p-4"></div>
-     
+      <div className="bg-backgroundGrey rounded-xl shadow p-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-3">
+            <img
+              src={profilePic}
+              alt={`${username} profile`}
+              className="w-10 h-10 rounded-full object-cover"
+            />
+          </div>
+        </div>
       </div>
+
   );
 }
