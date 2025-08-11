@@ -1,0 +1,15 @@
+{
+  "postData": {
+    "username": "anna",
+    "groupName": "Give",
+    "timeLeft": "2h",
+    "question": "What is your favourite color?",
+    "profilePic": "/images/anna.jpg",
+    "images": ["/images/photo1.jpg", "/images/photo2.jpg"],
+    "pollOptions": [
+      { "label": "Red" },
+      { "label": "Blue" },
+      { "label": "Green" }
+    ]
+  }
+}

@@ -1,5 +1,4 @@
 import React from "react";
-import PollBox from "./PollBox";
 
 export default function Post({
   username,
@@ -8,7 +7,7 @@ export default function Post({
   questionText,
   images,
   profilePic,
-  pollOptions
+  //pollOptions
 }) {
   return (
       <div className="bg-backgroundGrey rounded-xl shadow p-4">
@@ -55,9 +54,9 @@ export default function Post({
         )}
 
         {/* Poll */}
-        <div className="mt-4">
-          <PollBox options={pollOptions} />
-        </div>
+          {/* <div className="mt-4">
+            <PollBox options={pollOptions} />
+          </div> */}
 
     </div>
       );
