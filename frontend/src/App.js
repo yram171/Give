@@ -1,3 +1,6 @@
+import React, { useState, useEffect } from "react";
+import Post from "./components/Post";
+import postDataJson from "./data/postData.json";
 import logo from './assets/logo.svg';
 import './styles/App.css';
 
