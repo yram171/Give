@@ -5,13 +5,15 @@ export default function Post({
   username,
   groupName,
   timeLeft,
-  question,
+  questionText,
   images,
   profilePic,
   pollOptions
 }) {
   return (
       <div className="bg-backgroundGrey rounded-xl shadow p-4">
+
+        {/*Top Section*/}
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <img
@@ -29,6 +31,34 @@ export default function Post({
           <span className="text-darkGrey text-sm">{timeLeft} left</span>
         </div>
 
+        {/* Question */}
+        <p className="mt-3 font-medium">{questionText}</p>
+        
+        {/* Images */}
+        {images?.length > 0 && (
+          <div className="flex space-x-2 mt-3">
+            {images.map((img, index) => (
+              <div
+                key={index}
+                className="bg-darkGrey h-24 w-1/2 rounded-md overflow-hidden"
+              >
+                {img && (
+                  <img
+                    src={img}
+                    alt={`Option ${index + 1}`}
+                    className="h-full w-full object-cover"
+                  />
+                )}
+              </div>
+            ))}
           </div>
-  );
+        )}
+
+        {/* Poll */}
+        <div className="mt-4">
+          <PollBox options={pollOptions} />
+        </div>
+
+    </div>
+      );
 }
