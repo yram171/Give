@@ -5,6 +5,17 @@ import logo from './assets/logo.svg';
 import './styles/App.css';
 
 function App() {
+    const [postData, setPostData] = useState(null);
+
+  useEffect(() => {
+    // Simulating API fetch by reading local JSON
+    setPostData(postDataJson);
+  }, []);
+
+  if (!postData) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <div className="App">
       <header className="App-header">
@@ -26,3 +37,4 @@ function App() {
 }
 
 export default App;
+
