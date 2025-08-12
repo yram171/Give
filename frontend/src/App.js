@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Post from "./components/Post";
 import logo from './assets/logo.svg';
 import './styles/App.css';
+import Post from './components/Post';
 
 function App() {
     const [postData, setPostData] = useState(null);
@@ -54,12 +54,12 @@ function App() {
       {/* Post Content*/}
       <div className="p-4">
         <Post
-          username={postData.username}
-          groupName={postData.groupName}
-          timeLeft={postData.timeLeft}
-          question={postData.question}
-          profilePic={postData.profilePic}
-          images={postData.images}
+          // username={postData.username}
+          // groupName={postData.groupName}
+          // timeLeft={postData.timeLeft}
+          // question={postData.question}
+          // profilePic={postData.profilePic}
+          // images={postData.images}
           pollOptions={postData.pollOptions}
         />
       </div>
