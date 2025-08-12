@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import './PollOnPost.css';
+import './PollBox.css';
 
-const PollOnPost = ({ initialOptions }) => {
+export default function PollBox({ initialOptions }) {
   const [votes, setVotes] = useState(
     initialOptions.reduce((acc, option) => {
       acc[option.label] = 0;
@@ -13,7 +13,7 @@ const PollOnPost = ({ initialOptions }) => {
   const [hasVoted, setHasVoted] = useState(false);
 
   const handleVote = (optionLabel) => {
-    if (hasVoted) return;  // Prevent multiple votes for now
+    if (hasVoted) return;
     setVotes((prevVotes) => ({
       ...prevVotes,
       [optionLabel]: prevVotes[optionLabel] + 1,
@@ -21,11 +21,13 @@ const PollOnPost = ({ initialOptions }) => {
     setTotalVotes((prevTotal) => prevTotal + 1);
     setHasVoted(true);
   };
+
   const getPercentage = (optionLabel) => {
     if (totalVotes === 0) return 0;
     return Math.round((votes[optionLabel] / totalVotes) * 100);
   };
- return (
+
+  return (
     <div className="poll-container">
       {initialOptions.map((option, index) => (
         <div
@@ -34,26 +36,15 @@ const PollOnPost = ({ initialOptions }) => {
           onClick={() => handleVote(option.label)}
         >
           <div className="poll-bar-bg">
-            {/* Fill Bar */}
             <div
               className="poll-bar-fill"
               style={{ width: hasVoted ? `${getPercentage(option.label)}%` : '0%' }}
-            ></div>
-
-            {/* Option Text */}
+            />
             <span className="poll-option">{option.label}</span>
-
-            {/* Percentage Text */}
-            {hasVoted && (
-              <span className="poll-percent">{getPercentage(option.label)}%</span>
-            )}
+            {hasVoted && <span className="poll-percent">{getPercentage(option.label)}%</span>}
           </div>
         </div>
       ))}
     </div>
   );
-};
-
-export default PollOnPost;
-
-
+}

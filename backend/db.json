@@ -1,5 +1,5 @@
 {
-  "polls": [
+  "polls":
     {
       "id": 1,
       "options": [
@@ -9,5 +9,4 @@
         { "label": "Green Nails" }
       ]
     }
-  ]
 }
