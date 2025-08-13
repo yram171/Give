@@ -26,16 +26,33 @@ export default function Grouptab() {
 
         {/* Most Used Tags */}
         <div className="mt-5">
-          <h3 className="text-sm font-semibold text-left text-black">Most Used Tags</h3>
+          <h3 className="text-sm font-semibold text-left text-black">
+            Most Used Tags
+          </h3>
           <ul className="text-sm mt-2 space-y-1 font-medium text-black">
             <li className="flex justify-between items-center cursor-pointer">
-              #snacks <span>›</span>
+              #snacks{" "}
+              <img
+                src="/arrow.svg"
+                alt="arrow right"
+                style={{ width: "0.75em", height: "0.75em" }}
+              />
             </li>
             <li className="flex justify-between items-center cursor-pointer">
-              #movie <span>›</span>
+              #movie{" "}
+              <img
+                src="/arrow.svg"
+                alt="arrow right"
+                style={{ width: "0.75em", height: "0.75em" }}
+              />
             </li>
             <li className="flex justify-between items-center cursor-pointer">
-              #dinner <span>›</span>
+              #dinner{" "}
+              <img
+                src="/arrow.svg"
+                alt="arrow right"
+                style={{ width: "0.75em", height: "0.75em" }}
+              />
             </li>
           </ul>
         </div>
@@ -47,7 +64,29 @@ export default function Grouptab() {
             onClick={() => setShowMembers(!showMembers)}
           >
             View Members
-            <span>{showMembers ? "˄" : "˅"}</span>
+            <span>
+              {showMembers ? (
+                <img
+                  src="/arrow.svg"
+                  alt="arrow up"
+                  style={{
+                    width: "0.75em",
+                    height: "0.75em",
+                    transform: "rotate(-90deg)",
+                  }}
+                />
+              ) : (
+                <img
+                  src="/arrow.svg"
+                  alt="arrow down"
+                  style={{
+                    width: "0.75em",
+                    height: "0.75em",
+                    transform: "rotate(90deg)",
+                  }}
+                />
+              )}
+            </span>
           </button>
 
           {showMembers && (
