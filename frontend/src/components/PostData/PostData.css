@@ -34,7 +34,7 @@
   border-radius: 50%; /* Make them circular */
   border: none;
   margin: 0 5px; /* Spacing between dots */
-  cursor: pointer;
+  cursor: pointer; /* Remove default focus outline */
 }
 
 .my-slick-dots li.slick-active button {

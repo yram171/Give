@@ -11,9 +11,10 @@ const settings = {
       slidesToShow: 2,
       slidesToScroll: 1,
       autoplay: true,
-      autoplaySpeed: 3000,
+      autoplaySpeed: 1000,
       variableWidth: true,
       dotsClass: "my-slick-dots",
+      arrows:false,
 };
 
 const PostData = ({post}) => {
