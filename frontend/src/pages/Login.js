@@ -1,38 +1,38 @@
 import React, { useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const handleLogin = async () => {
+    setError("");
+    setSuccess("");
+
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      const user = auth.currentUser;
-      if (user) {
-        const idToken = await user.getIdToken();
-        const response = await fetch("http://localhost:5000/api/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${idToken}`,
-          },
-          body: JSON.stringify({ email }),
-        });
-        const result = await response.json();
-        console.log("Backend response:", result);
-      }
-      console.log("Logged in successfully");
-    } catch (err) {
-      setError(err.message);
+      const response = await fetch("http://localhost:5000/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) throw new Error(result.error || "Login failed");
+
+      setSuccess(result.message || "Logged in successfully");
+
+      // navigate to home here
+      // eg setTimeout(() => { navigate("/home");}, 2000);
+
+    } catch (error) {
+      setError(error.message);
     }
   };
 
   return (
     <div className="flex w-full h-screen bg-gray-100 font-[Nunito,Poppins,sans-serif]">
-      {/* Left Side */}
       <div className="w-[45%] flex justify-start items-center pl-[100px]">
         <div className="flex flex-col mb-[70px] ml-[25px] gap-1">
           <header>
@@ -46,7 +46,6 @@ const Login = () => {
         </div>
       </div>
 
-      {/* Right Side */}
       <div className="w-[45%] flex justify-center items-center">
         <div className="bg-white p-8 rounded-xl shadow-md w-[600px] flex flex-col gap-4 ml-12">
           <input
@@ -64,6 +63,10 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           {error && <p className="text-red-500 text-sm">{error}</p>}
+
+          {/* success message for testing purposes, should navigate to homepage once complete*/}
+          {success && <p className="text-green-500 text-sm">{success}</p>}
+
           <button
             className="bg-pink-200 text-white py-3 rounded-lg text-lg hover:bg-pink-400 transition-colors"
             onClick={handleLogin}
@@ -73,7 +76,11 @@ const Login = () => {
           <button className="border-none text-gray-500 text-sm underline pb-2 self-center hover:text-black">
             Forgot Account?
           </button>
-          <button className="bg-[#FFDD4A] text-white py-3 rounded-lg text-lg hover:bg-[#d2b122] transition-colors">
+          <button className="bg-[#FFDD4A] text-white py-3 rounded-lg text-lg hover:bg-[#d2b122] transition-colors"
+            onClick={() => {
+              // navigate to signup page
+            }}
+          >
             Create Account
           </button>
         </div>
