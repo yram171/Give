@@ -5,69 +5,14 @@ import PollBox from "../PollBox";
 
 import './Post.css';
 
-const Post = ({pollOptions}) => {
+const Post = ({user, group, post, pollOptions}) => {
   return (
     <div className='root'>
-      <UserCard user={{name: 'amywangx', profilePic: 'frontend/public/logo512.png'}} groupName={'Group1'} timeLeft={'7 hours'} />
-
+      <UserCard user={user} group={group} timeLeft={post.timeLeft} />
+      <PostData post={post} />
+      <PollBox initialOptions={pollOptions} />
     </div>
   )
 }
 
 export default Post;
-
-// function Post() {
-//   return (
-//       <div className="bg-backgroundGrey rounded-xl shadow p-4">
-
-//         {/*Top Section*/}
-//         <div className={styles.container}>
-//           <div className="flex items-center space-x-3">
-//             <img
-//               src={profilePic}
-//               alt={`${username} profile`}
-//               className="w-10 h-10 rounded-full object-cover"
-//             />
-//             <div>
-//               <p className="font-bold">@{username}</p>
-//               <p className="text-sm text-black">
-//                 posted to <span className="font-semibold">{groupName}</span>
-//               </p>
-//             </div>
-//           </div>
-//           <span className="text-darkGrey text-sm">{timeLeft} left</span>
-//         </div>
-
-//         {/* Question */}
-//         <p className="mt-3 font-medium">{questionText}</p>
-        
-//         {/* Images */}
-//         {images?.length > 0 && (
-//           <div className="flex space-x-2 mt-3">
-//             {images.map((img, index) => (
-//               <div
-//                 key={index}
-//                 className="bg-darkGrey h-24 w-1/2 rounded-md overflow-hidden"
-//               >
-//                 {img && (
-//                   <img
-//                     src={img}
-//                     alt={`Option ${index + 1}`}
-//                     className="h-full w-full object-cover"
-//                   />
-//                 )}
-//               </div>
-//             ))}
-//           </div>
-//         )}
-
-//         {/* Poll */}
-//           {/* <div className="mt-4">
-//             <PollBox options={pollOptions} />
-//           </div> */}
-
-//     </div>
-//       );
-// }
-     // <PostData questionText={'What movie should I watch tonight? '} content={{}} />
-     // <PollBox options={pollOptions}/>
