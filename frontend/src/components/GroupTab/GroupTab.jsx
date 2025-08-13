@@ -89,7 +89,11 @@ export default function Grouptab() {
             </span>
           </button>
 
-          {showMembers && (
+          <div
+            className={`overflow-hidden transition-all duration-500 ease-in-out ${
+              showMembers ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+            }`}
+          >
             <ul className="mt-3 space-y-2">
               {members.map((name, index) => (
                 <li key={index} className="flex items-center gap-2 text-sm">
@@ -102,9 +106,10 @@ export default function Grouptab() {
                 </li>
               ))}
             </ul>
-          )}
+          </div>
         </div>
       </div>
     </div>
   );
 }
+
