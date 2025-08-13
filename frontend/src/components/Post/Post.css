@@ -1,14 +1,10 @@
 .root {
-  width: 40vw;             
-  aspect-ratio: 610 / 612;      
-  
-  border-radius: 20px;
+  width: 24rem;             
+  border-radius: 1.5rem;
+  padding: 1rem;
   background-color: #F5F3F3;
-
-  margin: 0 auto;             
+  margin: auto;             
   display: flex;
   align-items: center;
   justify-content: center;
-
-  margin-top: calc((100vh - (44.44vw / (640 / 612))) / 2);
 }

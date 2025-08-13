@@ -8,9 +8,8 @@ import './Post.css';
 const Post = ({pollOptions}) => {
   return (
     <div className='root'>
-      <UserCard user={{name: 'Anna', profilePic: ''}} groupName={'groupName'} timeLeft={'7 hours'} />
-      <PostData questionText={'questionText'} content={{}} />
-      <PollBox options={pollOptions}/>
+      <UserCard user={{name: 'amywangx', profilePic: 'frontend/public/logo512.png'}} groupName={'Group1'} timeLeft={'7 hours'} />
+
     </div>
   )
 }
@@ -70,3 +69,5 @@ export default Post;
 //     </div>
 //       );
 // }
+     // <PostData questionText={'What movie should I watch tonight? '} content={{}} />
+     // <PollBox options={pollOptions}/>

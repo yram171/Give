@@ -1,0 +1,47 @@
+.user-card {
+/* background grey */
+  display: grid;
+  grid-template-columns: min-content auto min-content;
+  width: 100%;
+
+}
+
+.avatar {
+  width: 3.5rem;
+  height: 3.5rem;
+  background-image: url('image.webp'), url('image.jpg'), url('fallback-solid-color.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  > img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: #fff;
+    border: 2px solid #D9D9D9;
+
+  }
+}
+
+.user-info {
+  text-align: left;
+  padding: 0 1rem;
+}
+
+.username {
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+.group {
+  font-size: 0.75rem;
+}
+
+.group-name {
+  font-weight: 600;
+}
+
+.time {
+  white-space: nowrap;
+  font-size: 0.75rem;
+}
