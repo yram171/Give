@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React,{ useState, useEffect } from 'react';
+import { Routes, Route } from "react-router-dom";
+import Login from './pages/Login';
 import Post from './components/Post';
 import './styles/App.css';
 import GroupTab from './components/GroupTab';
@@ -14,6 +16,8 @@ async function getPostData () {
         return err.message; // Return error message for debugging
       }
     };
+
+// npm install react-router-dom
 
 function App() {
   const [postData, setPostData] = useState(null);
@@ -51,6 +55,11 @@ function App() {
 
   return (
     <div className="App">
+      <header className="App-header">
+        <Routes>
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </header>
       
       <div className="App flex">
       {/* left column */}
