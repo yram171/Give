@@ -1,6 +1,6 @@
 // import logo from './assets/logo.svg';
 import React from 'react';
-import CreateAccount from './components/CreateAccount';
+import CreateAccount from './pages/CreateAccount';
 import './styles/App.css';
 
 
