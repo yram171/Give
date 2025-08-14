@@ -3,6 +3,7 @@ import Post from './components/Post';
 import './styles/App.css';
 import GroupTab from './components/GroupTab';
 
+
 async function getPostData () {
       try {
         const res = await fetch('http://localhost:5001/postData');
@@ -31,6 +32,23 @@ function App() {
 
   if (loading) return <p>Loading...</p>;
 
+  // return (
+  //   <div className="App flex">
+  //     {/* left column */}
+  //     <GroupTab />
+
+  //     {/* middle column */}
+  //     <div className="flex-1 p-4">
+
+  //       <main>
+  //         <PollBox initialOptions={options} />
+  //       </main>
+  //     </div>
+  //   </div>
+  // );
+
+
+
   return (
     <div className="App">
       
@@ -53,5 +71,4 @@ function App() {
   );
 
 }
-
 export default App;
