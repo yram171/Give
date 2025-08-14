@@ -42,9 +42,11 @@ function App() {
           post={postData.post}
           pollOptions={postData.pollOptions}
         />
+
       </div>
     </div>
   );
+
 }
 
 export default App;
