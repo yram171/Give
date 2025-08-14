@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PollBox from './components/PollBox.jsx'; 
 import logo from './assets/logo.svg';
+import GroupTab from './components/GroupTab';
 import './styles/App.css';
 
 async function getPoll () {
@@ -37,16 +38,20 @@ function App() {
   if (loading) return <p>Loading...</p>;
 
   return (
-    <div className="App">
-      <header className="App-header">
-        App Header
-      </header>
+    <div className="App flex">
+      {/* left column */}
+      <GroupTab />
 
-      <main>
-        <PollBox initialOptions={options} />
-      </main>
+      {/* middle column */}
+      <div className="flex-1 p-4">
+
+        <main>
+          <PollBox initialOptions={options} />
+        </main>
+      </div>
     </div>
   );
+
 }
 
 export default App;
