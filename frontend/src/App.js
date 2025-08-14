@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Post from './components/Post';
 import './styles/App.css';
+import GroupTab from './components/GroupTab';
 
 async function getPostData () {
       try {
@@ -32,10 +33,13 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        App Header
-      </header>
+      
+      <div className="App flex">
+      {/* left column */}
+      <GroupTab />
       <div>
+
+      {/* middle column */}
         <Post
           user={postData.user}
           group={postData.group}
@@ -44,6 +48,7 @@ function App() {
         />
 
       </div>
+    </div>
     </div>
   );
 
