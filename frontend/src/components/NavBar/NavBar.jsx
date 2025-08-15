@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import "./NavBar.css";
-import { ReactComponent as NotificationIcon } from "../assets/notification.svg";
-import { ReactComponent as SettingsIcon } from "../assets/settings.svg";
+//import "./NavBar.css";
+import { ReactComponent as NotificationIcon } from "../../assets/notification.svg";
+import { ReactComponent as SettingsIcon } from "../../assets/settings.svg";
 
 export default function NavBar() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -16,7 +16,7 @@ export default function NavBar() {
   };
 
   return (
-    <nav className="navbar">
+    <nav className="flex items-center justify-between relative px-8 h-[90px] bg-gray-100">
       <div className="navbar-brand">
         <h1>Give</h1>
       </div>
