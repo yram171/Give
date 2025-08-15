@@ -17,8 +17,9 @@ export default function NavBar() {
 
   return (
     <nav className="flex items-center justify-between relative px-8 h-[90px] bg-gray-100">
-      <div className="navbar-brand">
-        <h1>Give</h1>
+      {/* Brand */}
+      <div className="cursor-pointer">
+        <h1 className="text-[#ffdd4a] text-4xl font-bold">Give</h1>
       </div>
 
       {/* Group search bar + notification button */}
