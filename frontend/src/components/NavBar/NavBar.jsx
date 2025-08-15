@@ -23,36 +23,38 @@ export default function NavBar() {
       </div>
 
       {/* Group search bar + notification button */}
-      <div className="navbar-center">
-        <div className="navbar-search">
-          <form onSubmit={handleSearchSubmit} className="search-form">
-            <div className="search-input-container">
-              <input
-                type="text"
-                placeholder="Search Groups, Tags, or Polls..."
-                value={searchQuery}
-                onChange={handleSearchChange}
-                className="search-input"
-              />
-              <button type="submit" className="search-button">
-                <svg
-                  className="search-icon"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                >
-                  <circle cx="11" cy="11" r="8"></circle>
-                  <path d="m21 21-4.35-4.35"></path>
-                </svg>
-              </button>
-            </div>
-          </form>
-        </div>
-
-        <button className="notification-btn">
-          <NotificationIcon className="notification-icon" />
-        </button>
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[600px]">
+        <form onSubmit={handleSearchSubmit} className="w-full">
+          <div className="relative flex items-center">
+            <input
+              type="text"
+              placeholder="Search Groups, Tags, or Polls..."
+              value={searchQuery}
+              onChange={handleSearchChange}
+              className="w-full py-3 pl-5 pr-12 rounded-full text-base bg-gray-300 placeholder-black/40 outline-none"
+            />
+            <button
+              type="submit"
+              className="absolute right-2 p-2 rounded-full flex items-center justify-center hover:bg-gray-100"
+            >
+              <svg
+                className="w-5 h-5 stroke-2 text-black"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.35-4.35"></path>
+              </svg>
+            </button>
+          </div>
+        </form>
       </div>
+
+      {/* Notification Button */}
+      <button className="absolute top-1/2 left-[calc(50%+330px)] -translate-x-1/2 -translate-y-1/2 p-2.5 rounded-full flex items-center justify-center bg-gray-100 hover:bg-gray-100 border-2 border-transparent hover:border-gray-300">
+        <NotificationIcon className="w-6 h-6 stroke-2 text-gray-600" />
+      </button>
 
       <div className="navbar-actions">
         <div className="user-profile">
