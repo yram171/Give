@@ -25,10 +25,14 @@ The following should be installed:
    ```
    
 **Install dependencies**
-   * JavaScript: `npm install`
+  `npm install`
+  `npm install react-slick slick-carousel`
   
 **Run the app locally**
-   `npm start` 
+  `npm start` 
+
+***The app should now be running at: ***
+  http://localhost:3000
 
 ## License
 This project is licensed under the **MIT License**.
