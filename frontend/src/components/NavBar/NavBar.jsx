@@ -56,20 +56,20 @@ export default function NavBar() {
         <NotificationIcon className="w-6 h-6 stroke-2 text-gray-600" />
       </button>
 
-      <div className="navbar-actions">
-        <div className="user-profile">
-          <div className="user-avatar">
+      <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 cursor-pointer p-2 rounded-[25px] hover:bg-gray-200">
+          <div className="w-[45px] h-[45px]">
             <img
               src="https://placehold.co/600x400.png"
               alt="User Avatar"
-              className="avatar-image"
+              className="w-full h-full rounded-full object-cover"
             />
           </div>
-          <span className="user-name">Kate Smith</span>
+          <span className="font-medium text-gray-700 text-lg">Kate Smith</span>
         </div>
 
-        <button className="settings-btn">
-          <SettingsIcon className="settings-icon" />
+        <button className="p-2.5 rounded-full flex items-center justify-center">
+          <SettingsIcon className="w-10 h-10" />
         </button>
       </div>
     </nav>
