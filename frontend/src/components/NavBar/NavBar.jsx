@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-//import "./NavBar.css";
 import { ReactComponent as NotificationIcon } from "../../assets/notification.svg";
 import { ReactComponent as SettingsIcon } from "../../assets/settings.svg";
 

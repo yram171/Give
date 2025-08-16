@@ -58,11 +58,9 @@ function App() {
     <div className="App">
       <NavBar />
 
-      <header className="App-header">
-        <Routes>
-          <Route path="/login" element={<Login />} />
-        </Routes>
-      </header>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+      </Routes>
 
       <div className="App flex">
         {/* left column */}
