@@ -52,7 +52,7 @@ export default function NavBar() {
       </div>
 
       {/* Notification Button */}
-      <button className="absolute top-1/2 left-[calc(50%+330px)] -translate-x-1/2 -translate-y-1/2 p-2.5 rounded-full flex items-center justify-center bg-gray-100 hover:bg-gray-100 border-2 border-transparent hover:border-gray-300">
+      <button className="absolute top-1/2 left-[calc(50%+330px)] -translate-x-1/2 -translate-y-1/2 p-2.5 rounded-full flex items-center justify-center bg-gray-300">
         <NotificationIcon className="w-6 h-6 stroke-2 text-gray-600" />
       </button>
 
