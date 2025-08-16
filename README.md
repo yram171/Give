@@ -25,13 +25,17 @@ The following should be installed:
    ```
    
 **Install dependencies**
-  `npm install`
-  `npm install react-slick slick-carousel`
+  ```
+  npm install
+  npm install react-slick slick-carousel
+  ```
   
 **Run the app locally**
-  `npm start` 
+  ```
+  npm start
+  ```
 
-***The app should now be running at: ***
+**The app should now be running at:**
   http://localhost:3000
 
 ## License
