@@ -2,33 +2,47 @@ import React from "react";
 import { Post, SuggestedBox, UserInfo, NavBar, ScreenTab, GroupSearch } from "../";
 
 function HomeScreen({ postData }) {
+  // Hardcoded list for now; replace with fetched DB data later
+  const posts = [
+    postData,                                  // reuse your existing shape
+    { ...postData, post: { ...postData.post, id: "p2", question: "Favourite movie snack?" } },
+    { ...postData, post: { ...postData.post, id: "p3", question: "Dinner plans tonight?" } },
+  ];
+
   return (
-    <>
-      <header>
+    <div className="h-screen flex flex-col overflow-hidden">
+      <header className="shrink-0">
         <NavBar />
       </header>
 
-      <main>
+      {/* min-h-0 lets children shrink and scroll correctly */}
+      <main className="flex flex-1 min-h-0">
         {/* left column */}
-        <div className="flex flex-col w-[27%] gap-4">
+        <aside className="flex w-[27%] flex-col gap-4 sticky top-0 max-h-screen overflow-y-auto flex-shrink-0">
           <UserInfo />
           <ScreenTab />
           <SuggestedBox />
-        </div>
+        </aside>
 
-        <Post
-          user={postData.user}
-          group={postData.group}
-          post={postData.post}
-          pollOptions={postData.pollOptions}
-        />
-        
+        {/* center column — remove h-screen, make it the scroller */}
+        <section className="flex-1 min-w-0 flex flex-col gap-4 overflow-y-auto scrollbar-hide px-2">
+          {posts.map((p) => (
+            <Post
+              key={p.post.id}
+              user={p.user}
+              group={p.group}
+              post={p.post}
+              pollOptions={p.pollOptions}
+            />
+          ))}
+        </section>
+
         {/* right column */}
-        <div className="flex flex-col w-[27%]">
+        <aside className="flex w-[27%] flex-col sticky top-0 max-h-screen flex-shrink-0 scrollbar-groupSearch">
           <GroupSearch />
-        </div>
+        </aside>
       </main>
-    </>
+    </div>
   );
 }
 

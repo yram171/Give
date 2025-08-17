@@ -23,20 +23,27 @@ export default function GroupSearch() {
   { id: 9, name: "Group 9" }
 ];
 
+// const posts = dataFromDB.map(doc => ({
+//   user: doc.user,
+//   group: doc.group,
+//   post: doc.post,
+//   pollOptions: doc.pollOptions,
+// }));
+
   function GroupItem({ name }) {
   return (
-    <div className="flex items-center rounded-xl gap-4 p-2 hover:bg-gray-100 cursor-pointer">
+    <li className="flex items-center rounded-xl gap-4 p-2 hover:bg-gray-100 cursor-pointer">
       <div className="w-10 h-10 rounded-full bg-gray-300" />
       <p className="font-semibold text-base text-black">{name}</p>
-    </div>
+    </li>
   );
   }
 
   const displayedGroups = expanded ? groups : groups.slice(0, 5);
 
   return (
-    <div className="w-full">
-      <div className="bg-backgroundGrey rounded-3xl p-4 shadow-sm flex flex-col gap-4">
+    <div className="w-full h-full relative">
+      <div className={`bg-backgroundGrey rounded-3xl p-4 shadow-sm flex flex-col gap-4 ${expanded ? 'h-full' : ''}`}>
         <div>
           <p className="font-semibold text-base text-black text-left">Groups</p>
         </div>
@@ -71,13 +78,12 @@ export default function GroupSearch() {
       </div>
     </div>
     {/* List of Groups */}
-    <div className={`flex flex-col gap-2 ${expanded ? "overflow-y-auto" : ""}`}>
-        {displayedGroups.map((g) => (
-          <GroupItem key={g.id} name={g.name} />
-        ))}
-    </div>
-
-   <div>
+    <div className={`flex flex-col gap-2 ${expanded ? "overflow-y-auto" : ""} with-scrollbar items-start`}>
+      <ul className='flex flex-col gap-2 grow'>
+          {displayedGroups.map((g) => (
+            <GroupItem key={g.id} name={g.name} />
+          ))}
+      </ul>
       <button
         type="button"
         className="right-2 p-2 rounded-full flex items-center justify-center"
