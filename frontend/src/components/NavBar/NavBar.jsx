@@ -15,26 +15,25 @@ export default function NavBar() {
   };
 
   return (
-    <nav className="flex items-center justify-between relative px-8 h-[90px] bg-gray-100">
+    <nav className="flex items-center relative h-[90px]">
       {/* Brand */}
-      <div className="cursor-pointer">
+      <div className="cursor-pointer w-[27%] flex justify-start">
         <h1 className="text-[#ffdd4a] text-4xl font-bold">Give</h1>
       </div>
-
-      {/* Group search bar + notification button */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[600px]">
+      <div className="w-[46%] flex gap-4">
+        <div className="w-full max-w-[500px]">
         <form onSubmit={handleSearchSubmit} className="w-full">
-          <div className="relative flex items-center">
+          <div className="relative flex items-center w-full py-1 pl-5 pr-2 rounded-full bg-gray-300 placeholder-black/40">
             <input
               type="text"
               placeholder="Search Groups, Tags, or Polls..."
               value={searchQuery}
               onChange={handleSearchChange}
-              className="w-full py-3 pl-5 pr-12 rounded-full text-base bg-gray-300 placeholder-black/40 outline-none"
+              className="w-full text-base bg-gray-300 placeholder-black/40 outline-none"
             />
             <button
               type="submit"
-              className="absolute right-2 p-2 rounded-full flex items-center justify-center hover:bg-gray-100"
+              className="right-2 p-2 rounded-full flex items-center justify-center hover:bg-gray-100"
             >
               <svg
                 className="w-5 h-5 stroke-2 text-black"
@@ -51,12 +50,15 @@ export default function NavBar() {
       </div>
 
       {/* Notification Button */}
-      <button className="absolute top-1/2 left-[calc(50%+330px)] -translate-x-1/2 -translate-y-1/2 p-2.5 rounded-full flex items-center justify-center bg-gray-300">
+      <button className="p-2.5 rounded-full flex items-center justify-center bg-gray-300">
         <NotificationIcon className="w-6 h-6 stroke-2 text-gray-600" />
       </button>
+      </div>
+      {/* Group search bar + notification button */}
+      
 
-      <div className="flex items-center gap-4">
-        <div className="flex items-center gap-2 cursor-pointer p-2 rounded-[25px] hover:bg-gray-200">
+      <div className="flex items-center gap-4 w-[27%] justify-end">
+        <div className="flex items-center gap-2 cursor-pointer rounded-[25px] hover:bg-gray-200">
           <div className="w-[45px] h-[45px]">
             <img
               src="https://placehold.co/600x400.png"
@@ -67,7 +69,7 @@ export default function NavBar() {
           <span className="font-medium text-gray-700 text-lg">Kate Smith</span>
         </div>
 
-        <button className="p-2.5 rounded-full flex items-center justify-center">
+        <button className="rounded-full flex items-center justify-center">
           <SettingsIcon className="w-10 h-10" />
         </button>
       </div>

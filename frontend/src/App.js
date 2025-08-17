@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 
-//import Login from "./pages/Login";
-//import Post from "./components/Post";
 import "./styles/App.css";
-//import GroupTab from "./components/GroupTab";
 import NavBar from "./components/NavBar/NavBar";
 
 import { Login, Post, GroupTab } from './';
@@ -19,8 +16,6 @@ async function getPostData() {
     return err.message; // Return error message for debugging
   }
 }
-
-// npm install react-router-dom
 
 function App() {
   const [postData, setPostData] = useState(null);
@@ -42,42 +37,27 @@ function App() {
 
   if (loading) return <p>Loading...</p>;
 
-  // return (
-  //   <div className="App flex">
-  //     {/* left column */}
-  //     <GroupTab />
-
-  //     {/* middle column */}
-  //     <div className="flex-1 p-4">
-
-  //       <main>
-  //         <PollBox initialOptions={options} />
-  //       </main>
-  //     </div>
-  //   </div>
-  // );
-
   return (
-    <div className="App">
-      <NavBar />
+    <div className="app">
 
       <Routes>
         <Route path="/login" element={<Login />} />
       </Routes>
+      <header>
+        <NavBar />
+      </header>
 
-      <div className="App flex">
+      <main>
         {/* left column */}
         <GroupTab />
-        <div>
-          {/* middle column */}
-          <Post
-            user={postData.user}
-            group={postData.group}
-            post={postData.post}
-            pollOptions={postData.pollOptions}
-          />
-        </div>
-      </div>
+        <Post
+          user={postData.user}
+          group={postData.group}
+          post={postData.post}
+          pollOptions={postData.pollOptions}
+        />
+        <GroupTab />
+      </main>
     </div>
   );
 }

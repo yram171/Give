@@ -1,11 +1,9 @@
 .root {
-  width: 28rem;             
+  width: 46%;             
   border-radius: 1.5rem;
   padding: 1rem;
-  background-color: #F5F3F3;
-  margin: auto;             
+  background-color: #F5F3F3;         
   display: flex;
   align-items: center;
-  justify-content: center;
   flex-direction: column;
 }
