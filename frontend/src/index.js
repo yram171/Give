@@ -24,3 +24,5 @@ export { default as GroupTab } from './components/GroupTab/GroupTab';
 export { default as PollBox } from './components/PollBox/PollBox';
 export { default as Login } from './pages/Login';
 export { default as SuggestedBox } from './components/SuggestedBox/SuggestedBox';
+export { default as NavBar } from './components/NavBar/NavBar';
+export { default as UserInfo } from './components/UserInfo/UserInfo';
