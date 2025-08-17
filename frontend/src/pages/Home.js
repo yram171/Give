@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Post from "../components/Post/Post";
-import GroupTab from "../components/GroupTab/GroupTab";
+import Post from "../components/Post";
+import GroupTab from "../components/GroupTab";
+import NavBar from "../components/NavBar";
 import "../styles/App.css";
 
 async function getPostData() {
@@ -35,17 +36,20 @@ function Home() {
   if (loading) return <p>Loading...</p>;
 
   return (
-    <div className="App flex">
-      {/* left column */}
-      <GroupTab />
-      <div>
-        {/* middle column */}
-        <Post
-          user={postData.user}
-          group={postData.group}
-          post={postData.post}
-          pollOptions={postData.pollOptions}
-        />
+    <div className="App flex flex-col">
+      <NavBar />
+      <div className="flex">
+        {/* left column */}
+        <GroupTab />
+        <div>
+          {/* middle column */}
+          <Post
+            user={postData.user}
+            group={postData.group}
+            post={postData.post}
+            pollOptions={postData.pollOptions}
+          />
+        </div>
       </div>
     </div>
   );

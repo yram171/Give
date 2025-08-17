@@ -1,7 +1,7 @@
 import React from "react";
-import UserCard from "../UserCard/UserCard";
-import PostData from "../PostData/PostData";
-import PollBox from "../PollBox/PollBox";
+import UserCard from "./UserCard";
+import PostData from "./PostData";
+import PollBox from "./PollBox";
 
 import './Post.css';
 
