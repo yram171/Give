@@ -6,7 +6,7 @@ export default function SuggestedBox() {
 
   return (
     <div className="w-full">
-      <div className="bg-backgroundGrey rounded-3xl p-3 shadow-sm">
+      <div className="bg-backgroundGrey rounded-3xl p-4 shadow-sm">
 
         {/* Suggested */}
         <div>

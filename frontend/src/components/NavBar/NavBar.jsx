@@ -33,10 +33,10 @@ export default function NavBar() {
             />
             <button
               type="submit"
-              className="right-2 p-2 rounded-full flex items-center justify-center hover:bg-gray-100"
+              className="right-2 p-2 rounded-full flex items-center justify-center"
             >
               <svg
-                className="w-5 h-5 stroke-2 text-black"
+                className="w-5 h-5 stroke-2 text-black opacity-60 hover:opacity-100"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"

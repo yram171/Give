@@ -13,7 +13,7 @@ export default function Grouptab() {
   ];
 
   return (
-    <div className="w-[27%] rounded-xl">
+    <div className="w-full rounded-xl">
       <div className="bg-backgroundGrey rounded-3xl p-3">
         {/* Group Header */}
         <div className="flex items-center p-4 rounded-xl  bg-defaultYellow gap-3">

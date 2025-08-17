@@ -1,5 +1,5 @@
 import React from "react";
-import { Post, SuggestedBox, UserInfo, NavBar, ScreenTab } from "../";
+import { Post, SuggestedBox, UserInfo, NavBar, ScreenTab, GroupSearch } from "../";
 
 function HomeScreen({ postData }) {
   return (
@@ -9,8 +9,8 @@ function HomeScreen({ postData }) {
       </header>
 
       <main>
+        {/* left column */}
         <div className="flex flex-col w-[27%] gap-4">
-          {/* left column */}
           <UserInfo />
           <ScreenTab />
           <SuggestedBox />
@@ -22,10 +22,10 @@ function HomeScreen({ postData }) {
           post={postData.post}
           pollOptions={postData.pollOptions}
         />
-
+        
+        {/* right column */}
         <div className="flex flex-col w-[27%]">
-          {/* right column */}
-          MMM
+          <GroupSearch />
         </div>
       </main>
     </>
