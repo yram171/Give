@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export default function Grouptab() {
+export default function UserInfo() {
   const [username, setUsername] = useState("");
 
   return (
@@ -10,7 +10,7 @@ export default function Grouptab() {
         <div className="w-14 h-14 rounded-full bg-gray-300" />
         <div className="flex flex-col items-start justify-between gap-4">
           <div className="text-left">
-            <p className="font-semibold text-base text-black">Hi Kate!</p>
+            <p className="text-xl font-semibold text-base text-black">Hi Kate!</p>
             <p className="text-[0.6rem] text-black-200">@katesmith0001</p>
           </div>
            <div>

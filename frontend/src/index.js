@@ -27,3 +27,4 @@ export { default as HomeScreen } from './pages/HomeScreen';
 export { default as SuggestedBox } from './components/SuggestedBox/SuggestedBox';
 export { default as NavBar } from './components/NavBar/NavBar';
 export { default as UserInfo } from './components/UserInfo/UserInfo';
+export { default as ScreenTab } from './components/ScreenTab/ScreenTab';
