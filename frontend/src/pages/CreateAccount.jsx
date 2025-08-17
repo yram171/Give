@@ -2,33 +2,33 @@ import React from 'react';
 
 const CreateAccount = () => {
   return (
-    <div className="min-h-screen bg-[#F5CCE2]">
+    <div className="min-h-screen bg-defaultPink font-[Nunito,Poppins,sans-serif]">
       {/* Header with website name */}
       <div className="absolute top-0 left-0 p-6 z-20">
-        <h1 className="text-4xl font-extrabold text-gray-50">Give</h1>
+        <h1 className="text-4xl font-extrabold text-backgroundGrey">GIVE</h1>
       </div>
       
       {/* Bar Graph Design */}
       <div className="fixed left-8 bottom-0 flex items-end space-x-2 z-0">
         {/* Bar 1 */}
-        <div className="w-12 h-72 bg-[#FFD3EB] rounded-t-lg"></div>
+        <div className="w-12 h-72 bg-lightPinkOpaque rounded-t-lg"></div>
         {/* Bar 2 */}
-        <div className="w-12 h-96 bg-[#FFD3EB] rounded-t-lg"></div>
+        <div className="w-12 h-96 bg-lightPinkOpaque rounded-t-lg"></div>
         {/* Bar 3 */}
-        <div className="w-12 h-56 bg-[#FFD3EB] rounded-t-lg"></div>
+        <div className="w-12 h-56 bg-lightPinkOpaque rounded-t-lg"></div>
       </div>
 
       {/* Main content */}
       <div className="flex items-start justify-end relative z-10 min-h-screen">
         <div className="mt-28 w-full mx-6 xl:mx-10 flex flex-col min-h-screen max-w-md sm:max-w-lg md:max-w-2xl lg:max-w-4xl xl:max-w-6xl">
             <div className="px-4 sm:px-6 lg:px-8 pb-8">
-                <p className="text-center text-xl font-bold text-gray-50">
+                <p className="text-center text-2xl font-medium text-backgroundGrey">
                     When you can't decide, post a poll and let your people pick.
                 </p>
             </div>
 
-            <form className="bg-gray-50 p-8 pb-0 rounded-t-3xl flex-1 flex flex-col">
-                <p className="text-left text-lg font-extrabold text-gray-900">
+            <form className="bg-backgroundGrey p-8 pb-0 rounded-t-3xl flex-1 flex flex-col">
+                <p className="text-left text-lg font-bold text-gray-900">
                     Create Account
                 </p>
                 <div className="mt-8 mx-10 space-y-4 flex-1 pb-8">
@@ -40,7 +40,7 @@ const CreateAccount = () => {
                                     id="firstName"
                                     name="firstName"
                                     type="text"
-                                    className="mt-1 appearance-none relative block w-full px-3 py-2 border border-transparent bg-[#D9D9D9] placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
+                                    className="mt-1 appearance-none relative block w-full px-3 py-2 border border-transparent bg-darkGrey placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
                                     placeholder="First name"
                                 />
                             </div>
@@ -50,7 +50,7 @@ const CreateAccount = () => {
                                     id="lastName"
                                     name="lastName"
                                     type="text"
-                                    className="mt-1 appearance-none relative block w-full px-3 py-2 border border-transparent bg-[#D9D9D9] placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
+                                    className="mt-1 appearance-none relative block w-full px-3 py-2 border border-transparent bg-darkGrey placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
                                     placeholder="Last name"
                                 />
                             </div>
@@ -63,7 +63,7 @@ const CreateAccount = () => {
                                 name="email"
                                 type="email"
                                 autoComplete="email"
-                                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-transparent bg-[#D9D9D9] placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
+                                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-transparent bg-darkGrey placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
                                 placeholder="Email address"
                             />
                         </div>
@@ -75,7 +75,7 @@ const CreateAccount = () => {
                                 name="password"
                                 type="password"
                                 autoComplete="new-password"
-                                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-transparent bg-[#D9D9D9] placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
+                                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-transparent bg-darkGrey placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
                                 placeholder="Password"
                             />
                         </div>
@@ -87,7 +87,7 @@ const CreateAccount = () => {
                                 name="confirmPassword"
                                 type="password"
                                 autoComplete="new-password"
-                                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-transparent bg-[#D9D9D9] placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
+                                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-transparent bg-darkGrey placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
                                 placeholder="Confirm password"
                             />
                         </div>
@@ -101,7 +101,7 @@ const CreateAccount = () => {
                                 id="birthday"
                                 name="birthday"
                                 type="date"
-                                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-transparent bg-[#D9D9D9] placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
+                                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-transparent bg-darkGrey placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
                                 placeholder="Birthday"
                             />
                         </div>
