@@ -23,3 +23,4 @@ export { default as Post } from './components/Post/Post';
 export { default as GroupTab } from './components/GroupTab/GroupTab';
 export { default as PollBox } from './components/PollBox/PollBox';
 export { default as Login } from './pages/Login';
+export { default as SuggestedBox } from './components/SuggestedBox/SuggestedBox';

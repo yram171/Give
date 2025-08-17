@@ -23,13 +23,13 @@ export default function NavBar() {
       <div className="w-[46%] flex gap-4">
         <div className="w-full max-w-[500px]">
         <form onSubmit={handleSearchSubmit} className="w-full">
-          <div className="relative flex items-center w-full py-1 pl-5 pr-2 rounded-full bg-gray-300 placeholder-black/40">
+          <div className="relative flex items-center w-full py-1 pl-5 pr-2 rounded-full bg-darkGrey placeholder-black/40">
             <input
               type="text"
               placeholder="Search Groups, Tags, or Polls..."
               value={searchQuery}
               onChange={handleSearchChange}
-              className="w-full text-base bg-gray-300 placeholder-black/40 outline-none"
+              className="w-full text-base bg-darkGrey placeholder-black/40 outline-none"
             />
             <button
               type="submit"
@@ -50,7 +50,7 @@ export default function NavBar() {
       </div>
 
       {/* Notification Button */}
-      <button className="p-2.5 rounded-full flex items-center justify-center bg-gray-300">
+      <button className="p-2.5 rounded-full flex items-center justify-center bg-darkGrey">
         <NotificationIcon className="w-6 h-6 stroke-2 text-gray-600" />
       </button>
       </div>
@@ -58,7 +58,7 @@ export default function NavBar() {
       
 
       <div className="flex items-center gap-4 w-[27%] justify-end">
-        <div className="flex items-center gap-2 cursor-pointer rounded-[25px] hover:bg-gray-200">
+        <div className="flex items-center gap-2 cursor-pointer rounded-[25px]">
           <div className="w-[45px] h-[45px]">
             <img
               src="https://placehold.co/600x400.png"

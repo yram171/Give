@@ -4,7 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import "./styles/App.css";
 import NavBar from "./components/NavBar/NavBar";
 
-import { Login, Post, GroupTab } from './';
+import { Login, Post, GroupTab, SuggestedBox } from './';
 
 async function getPostData() {
   try {
@@ -56,7 +56,7 @@ function App() {
           post={postData.post}
           pollOptions={postData.pollOptions}
         />
-        <GroupTab />
+        <SuggestedBox />
       </main>
     </div>
   );
