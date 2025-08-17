@@ -3,16 +3,16 @@ import { Routes, Route } from "react-router-dom";
 
 import "./styles/App.css";
 
-import { Login, Post, GroupTab, SuggestedBox, NavBar, UserInfo } from './';
+import { Login, HomeScreen } from "./";
 
 async function getPostData() {
   try {
     const res = await fetch("http://localhost:5001/postData");
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return await res.json(); //
+    return await res.json();
   } catch (err) {
     console.error("Failed to load poll:", err);
-    return err.message; // Return error message for debugging
+    return err.message;
   }
 }
 
@@ -22,12 +22,8 @@ function App() {
 
   useEffect(() => {
     getPostData()
-      .then((data) => {
-        setPostData(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching post data:", error);
-      })
+      .then((data) => setPostData(data))
+      .catch((error) => console.error("Error fetching post data:", error))
       .finally(() => {
         console.log("Post data fetch completed");
         setLoading(false);
@@ -38,33 +34,12 @@ function App() {
 
   return (
     <div className="app">
-
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/HomeScreen" element={<HomeScreen postData={postData} />} />
       </Routes>
-      <header>
-        <NavBar />
-      </header>
-
-      <main>
-        <div className="flex flex-col w-[27%] gap-4">
-          {/* left column */}
-          <UserInfo />
-          <SuggestedBox />
-        </div>
-
-        <Post
-          user={postData.user}
-          group={postData.group}
-          post={postData.post}
-          pollOptions={postData.pollOptions}
-        />
-       <div className="flex flex-col w-[27%]">
-          {/* left column */}
-          MMM
-        </div>
-      </main>
     </div>
   );
 }
+
 export default App;
