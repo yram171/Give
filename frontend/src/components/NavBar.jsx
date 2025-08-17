@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { ReactComponent as NotificationIcon } from "../../assets/notification.svg";
-import { ReactComponent as SettingsIcon } from "../../assets/settings.svg";
+import { ReactComponent as NotificationIcon } from "../assets/notification.svg";
+import { ReactComponent as SettingsIcon } from "../assets/settings.svg";
 
 export default function NavBar() {
   const [searchQuery, setSearchQuery] = useState("");
