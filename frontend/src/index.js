@@ -2,8 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import './styles/index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
+
+import App from './App';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -15,3 +16,10 @@ root.render(
 );
 
 reportWebVitals();
+
+// --- barrel exports ---
+export { default as App } from './App';
+export { default as Post } from './components/Post/Post';
+export { default as GroupTab } from './components/GroupTab/GroupTab';
+export { default as PollBox } from './components/PollBox/PollBox';
+export { default as Login } from './pages/Login';

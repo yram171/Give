@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
-import Login from "./pages/Login";
-import Post from "./components/Post";
+
+//import Login from "./pages/Login";
+//import Post from "./components/Post";
 import "./styles/App.css";
-import GroupTab from "./components/GroupTab";
+//import GroupTab from "./components/GroupTab";
 import NavBar from "./components/NavBar/NavBar";
+
+import { Login, Post, GroupTab } from './';
 
 async function getPostData() {
   try {
