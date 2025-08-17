@@ -5,7 +5,7 @@ export default function SuggestedBox() {
   const groups = ["Group 1", "Group 2", "Group 3", "Group 4"];
 
   return (
-    <aside className="w-[27%]">
+    <div className="w-full">
       <div className="bg-backgroundGrey rounded-3xl p-3 shadow-sm">
 
         {/* Suggested */}
@@ -47,6 +47,6 @@ export default function SuggestedBox() {
           </ul>
         </div>
       </div>
-    </aside>
+    </div>
   );
 }

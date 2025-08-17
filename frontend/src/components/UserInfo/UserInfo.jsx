@@ -4,8 +4,8 @@ export default function Grouptab() {
   const [username, setUsername] = useState("");
 
   return (
-    // <div className="w-[27%] rounded-xl">
-      <div className="w-[27%] rounded-xl flex items-start bg-backgroundGrey rounded-3xl px-4 py-2 gap-2">
+
+      <div className="w-full rounded-3xl flex items-start bg-backgroundGrey rounded-3xl px-4 py-2 gap-2">
         {/* User Avatar */}
         <div className="w-14 h-14 rounded-full bg-gray-300" />
         <div className="flex flex-col items-start justify-between gap-4">
@@ -19,7 +19,6 @@ export default function Grouptab() {
         </div>
        
       </div>
-      // </div>
 
   );
 }

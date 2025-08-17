@@ -47,15 +47,22 @@ function App() {
       </header>
 
       <main>
-        {/* left column */}
-        <GroupTab />
+        <div className="flex flex-col w-[27%] gap-4">
+          {/* left column */}
+          <UserInfo />
+          <SuggestedBox />
+        </div>
+
         <Post
           user={postData.user}
           group={postData.group}
           post={postData.post}
           pollOptions={postData.pollOptions}
         />
-        <UserInfo />
+       <div className="flex flex-col w-[27%]">
+          {/* left column */}
+          MMM
+        </div>
       </main>
     </div>
   );
