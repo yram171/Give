@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @import url('https://fonts.googleapis.com/css2?family=Gothic+A1:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=SF+Pro+Rounded:wght@400;500;600;700&display=swap');
 .scrollbar-hide::-webkit-scrollbar { display: none; }
 
 
@@ -44,3 +45,9 @@ code {
     }
   }
 
+@font-face {
+  font-family: 'SF Pro Rounded';
+  src: url('../assets/fonts/SF-Pro-Rounded-Bold.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}

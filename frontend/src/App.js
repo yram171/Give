@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
 
 import "./styles/App.css";
 
-import { Login, HomeScreen } from "./";
+import Login from "./pages/Login";
+import Home from "./pages/Home";
+import CreateAccount from "./pages/CreateAccount";
 
 async function getPostData() {
   try {
@@ -32,13 +37,24 @@ function App() {
 
   if (loading) return <p>Loading...</p>;
 
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Login />,
+    },
+    {
+      path: "/home",
+      element: <Home postData={postData} />, // ✅ pass postData
+    },
+    {
+      path: "/create-account",
+      element: <CreateAccount />,
+    },
+  ]);
+
   return (
     <div className="app">
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/home" element={<HomeScreen postData={postData} />} />
-        {/* <Route path="/group&id=:id" element={<Group />} /> */}
-      </Routes>
+      <RouterProvider router={router} />
     </div>
   );
 }

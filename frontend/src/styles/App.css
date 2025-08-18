@@ -23,3 +23,23 @@ main {
     height: fit-content;
   }
 }
+
+/* Slick custom pink dots for slider */
+.my-slick-dots {
+  display: flex !important;
+  justify-content: center;
+}
+.my-slick-dots li button {
+  font-size: 0;
+  width: 6px;
+  height: 6px;
+  background-color: #F5CCE2;
+  opacity: 0.4;
+  border-radius: 50%;
+  border: none;
+  margin: 0 5px;
+  cursor: pointer;
+}
+.my-slick-dots li.slick-active button {
+  opacity: 1;
+}

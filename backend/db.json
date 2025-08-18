@@ -21,7 +21,9 @@
     "pollOptions": [
       { "label": "Red" },
       { "label": "Blue" },
-      { "label": "Green" }
+      { "label": "Green" },
+      { "label": "Pink" }
+
     ]
   }
 }
