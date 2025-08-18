@@ -1,7 +1,21 @@
 import React from "react";
 import { Post, SuggestedBox, UserInfo, NavBar, ScreenTab, GroupSearch } from "../";
+import { useState, useMemo } from "react";
 
 function HomeScreen({ postData }) {
+  const [searchQuery, setSearchQuery] = useState("");
+  
+    const handleSearchChange = (e) => {
+      setSearchQuery(e.target.value);
+    };
+  
+    const handleSearchSubmit = (e) => {
+      e.preventDefault();
+      console.log("Search for:", searchQuery);
+      // TODO: route to results page or trigger fetch here
+    };
+
+
   // Hardcoded list for now; replace with fetched DB data later
   const posts = [
     postData,                                  // reuse your existing shape
@@ -9,10 +23,11 @@ function HomeScreen({ postData }) {
     { ...postData, post: { ...postData.post, id: "p3", question: "Dinner plans tonight?" } },
   ];
 
+
   return (
     <div className="h-screen flex flex-col overflow-hidden">
       <header className="shrink-0">
-        <NavBar />
+              <NavBar/>
       </header>
 
       {/* min-h-0 lets children shrink and scroll correctly */}

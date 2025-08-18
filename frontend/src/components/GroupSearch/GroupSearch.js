@@ -5,15 +5,19 @@ import clsx from "clsx";
 
 
 export default function GroupSearch() {
+  
   const [searchQuery, setSearchQuery] = useState("");
   const [expanded, setExpanded] = useState(false);
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
-  };
-  const handleSearchSubmit = (e) => {
-    e.preventDefault()
-    console.log("Search for:", searchQuery)
+    console.log('handleSearchChange')
   }
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    console.log('handleSearchSubmit')
+  }
+
   const groups = [
     { id: 1, name: "Group 1", profilePic: "/photo1.jpg" },
     { id: 2, name: "Group 2", profilePic: "/photo2.jpg" },
