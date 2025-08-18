@@ -1,6 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const CreateAccount = () => {
+  const navigate = useNavigate();
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [birthday, setBirthday] = useState('');
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError(''); setSuccess('');
+    if (!email || !password) { setError('Email and password required'); return; }
+    if (password !== confirmPassword) { setError('Passwords do not match'); return; }
+
+    try {
+      const res = await fetch('/api/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ firstName, lastName, email, password, birthday }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Signup failed');
+      setSuccess(data.message || 'Account created');
+      setTimeout(() => navigate('/'), 1200);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-defaultPink font-[Nunito,Poppins,sans-serif]">
       {/* Header with website name */}
@@ -27,7 +59,7 @@ const CreateAccount = () => {
                 </p>
             </div>
 
-            <form className="bg-backgroundGrey p-8 pb-0 rounded-t-3xl flex-1 flex flex-col">
+            <form onSubmit={handleSubmit} className="bg-backgroundGrey p-8 pb-0 rounded-t-3xl flex-1 flex flex-col">
                 <p className="text-left text-lg font-bold text-gray-900">
                     Create Account
                 </p>
@@ -40,6 +72,8 @@ const CreateAccount = () => {
                                     id="firstName"
                                     name="firstName"
                                     type="text"
+                                    value={firstName}
+                                    onChange={(e) => setFirstName(e.target.value)}
                                     className="mt-1 appearance-none relative block w-full px-3 py-2 border border-transparent bg-darkGrey placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
                                     placeholder="First name"
                                 />
@@ -50,6 +84,8 @@ const CreateAccount = () => {
                                     id="lastName"
                                     name="lastName"
                                     type="text"
+                                    value={lastName}
+                                    onChange={(e) => setLastName(e.target.value)}
                                     className="mt-1 appearance-none relative block w-full px-3 py-2 border border-transparent bg-darkGrey placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
                                     placeholder="Last name"
                                 />
@@ -63,6 +99,8 @@ const CreateAccount = () => {
                                 name="email"
                                 type="email"
                                 autoComplete="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                                 className="mt-1 appearance-none relative block w-full px-3 py-2 border border-transparent bg-darkGrey placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
                                 placeholder="Email address"
                             />
@@ -75,6 +113,8 @@ const CreateAccount = () => {
                                 name="password"
                                 type="password"
                                 autoComplete="new-password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
                                 className="mt-1 appearance-none relative block w-full px-3 py-2 border border-transparent bg-darkGrey placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
                                 placeholder="Password"
                             />
@@ -87,6 +127,8 @@ const CreateAccount = () => {
                                 name="confirmPassword"
                                 type="password"
                                 autoComplete="new-password"
+                                value={confirmPassword}
+                                onChange={(e) => setConfirmPassword(e.target.value)}
                                 className="mt-1 appearance-none relative block w-full px-3 py-2 border border-transparent bg-darkGrey placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
                                 placeholder="Confirm password"
                             />
@@ -101,11 +143,17 @@ const CreateAccount = () => {
                                 id="birthday"
                                 name="birthday"
                                 type="date"
+                                value={birthday}
+                                onChange={(e) => setBirthday(e.target.value)}
                                 className="mt-1 appearance-none relative block w-full px-3 py-2 border border-transparent bg-darkGrey placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
                                 placeholder="Birthday"
                             />
                         </div>
                     </div>
+
+                    {/* Error and Success Messages */}
+                    {error && <div className="text-red-500 text-sm mt-4">{error}</div>}
+                    {success && <div className="text-green-500 text-sm mt-4">{success}</div>}
 
                     {/* Disclaimer text */}
                     <div className="text-left text-[10px] text-gray-500 leading-relaxed mt-6">
