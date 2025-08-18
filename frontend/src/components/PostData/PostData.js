@@ -24,15 +24,16 @@ const PostData = ({post}) => {
   return (
     <div className='post-data-container'>
       <div className='post-question'>{post.question}</div>
+      <div className="text-[10px] text-left text-gray-500">{post.tags.join(" ")}</div>
       {hasContent && (
         <Slider {...settings} className="post-slider">
           {post.content.map((image, index) => (
             <div key={index} className="post-slide">
               <img src={image} alt={`Post image ${index + 1}`} className="post-image" />
-            </div>
-          ))}
-        </Slider>
-      )}
+                  </div>
+                ))}
+              </Slider>
+            )}
   </div>
   );
 }
