@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     setError("");
@@ -76,10 +78,9 @@ const Login = () => {
           <button className="border-none text-gray-500 text-sm underline pb-2 self-center hover:text-black">
             Forgot Account?
           </button>
-          <button className="bg-defaultYellow text-white py-3 rounded-lg text-lg hover:bg-[#d2b122] transition-colors"
-            onClick={() => {
-              // navigate to signup page
-            }}
+          <button
+            className="bg-defaultYellow text-white py-3 rounded-lg text-lg hover:bg-[#d2b122] transition-colors"
+            onClick={() => navigate("/create-account")}
           >
             Create Account
           </button>
