@@ -35,7 +35,7 @@ export default function PollBox({ initialOptions }) {
           className="poll-row"
           onClick={() => handleVote(option.label)}
         >
-          <div className="poll-bar-bg bg-pollBarGrey">
+          <div className={`poll-bar-bg bg-pollBarGrey${!hasVoted ? ' hover:bg-pollBarHover' : ''}`}>
             <div
               className="poll-bar-fill"
               style={{ width: hasVoted ? `${getPercentage(option.label)}%` : '0%' }}

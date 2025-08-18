@@ -1,3 +1,4 @@
+
 module.exports = {
   content: [  "./src/**/*.{js,jsx,ts,tsx}",
   "./public/index.html"],
@@ -10,7 +11,11 @@ module.exports = {
         defaultYellow: "#FFDD4A",
         lightYellow: "rgba(255, 221, 74, 0.15)", // 15% opacity
         darkGrey: "#D9D9D9",
-        pollBarGrey: "#ebe9e0"
+        pollBarGrey: "#ebe9e0",
+        pollBarHover: "#f7e595c9"
+      },
+      fontFamily: {
+        sans: ['Gothic A1', 'Inter', 'sans-serif'],
       },
     },
   },

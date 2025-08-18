@@ -25,6 +25,7 @@ function HomeScreen({ postData }) {
 
 
   return (
+    <div className="font-sans">
     <div className="h-screen flex flex-col overflow-hidden">
       <header className="shrink-0">
               <NavBar/>
@@ -57,6 +58,7 @@ function HomeScreen({ postData }) {
           <GroupSearch />
         </aside>
       </main>
+    </div>
     </div>
   );
 }
