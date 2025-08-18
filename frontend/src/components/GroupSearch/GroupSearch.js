@@ -1,3 +1,4 @@
+"use client"
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import clsx from "clsx";
@@ -10,9 +11,9 @@ export default function GroupSearch() {
     setSearchQuery(e.target.value);
   };
   const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    console.log("Search for:", searchQuery);
-  };
+    e.preventDefault()
+    console.log("Search for:", searchQuery)
+  }
   const groups = [
     { id: 1, name: "Group 1", profilePic: "/photo1.jpg" },
     { id: 2, name: "Group 2", profilePic: "/photo2.jpg" },
@@ -23,14 +24,17 @@ export default function GroupSearch() {
     { id: 7, name: "Group 7", profilePic: "/group-7-avatar.png" },
     { id: 8, name: "Group 8", profilePic: "/group-8-avatar.png" },
     { id: 9, name: "Group 9", profilePic: "/group-9-avatar.png" },
-];
+  ];
 
-// const posts = dataFromDB.map(doc => ({
+  // const posts = dataFromDB.map(doc => ({
 //   user: doc.user,
 //   group: doc.group,
 //   post: doc.post,
 //   pollOptions: doc.pollOptions,
 // }));
+
+  const filteredGroups = groups.filter((group) => group.name.toLowerCase().
+  includes(searchQuery.toLowerCase()))
 
   function GroupItem({ group }) {
     const { id, name, profilePic } = group;
@@ -48,7 +52,8 @@ export default function GroupSearch() {
     )
   }
 
-  const displayedGroups = expanded ? groups : groups.slice(0, 5);
+  const displayedGroups = searchQuery.trim() ? filteredGroups : 
+  expanded ? filteredGroups : filteredGroups.slice(0, 5)
 
   return (
     <div className="w-full h-full relative">
@@ -92,22 +97,24 @@ export default function GroupSearch() {
           {displayedGroups.map((group) => (
             <GroupItem key={group.id} group={group} />
           ))}
-      </ul>
-      <button
-        type="button"
-        className="right-2 p-2 rounded-full flex items-center justify-center"
-        onClick={() => setExpanded((prev) => !prev)}
-        >
-        <p className="text-xs font-semibold text-black opacity-60 hover:opacity-100">
-          {expanded ? "Collapse" : "View All"}
-        </p>
-      </button>
+        </ul>
+        {filteredGroups.length > 5 && !searchQuery.trim() && (
+          <button
+            type="button"
+            className="right-2 p-2 rounded-full flex items-center justify-center"
+            onClick={() => setExpanded((prev) => !prev)}
+          >
+            <p className="text-xs font-semibold text-black opacity-60 hover:opacity-100">
+              {expanded ? "Collapse" : "View All"}
+            </p>
+          </button>
+        )}
+      </div>
     </div>
-  </div>
-</div>
-
-  );
+    </div>
+  )
 }
+
 
 
 
