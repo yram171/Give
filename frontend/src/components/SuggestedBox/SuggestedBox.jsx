@@ -2,7 +2,21 @@ import React from "react";
 
 export default function SuggestedBox() {
   const tags = ["#snacks", "#movie", "#dinner"];
-  const groups = ["Group 1", "Group 2", "Group 3", "Group 4"];
+  const groups = [
+    { id: 1, name: "Group 1"},
+    { id: 2, name: "Group 2"},
+    { id: 3, name: "Group 3"},
+    { id: 4, name: "Group 4"}
+  ]
+
+    function GroupItem({ group }) {
+      const { id, name, profilePic } = group;
+      return (
+        <li className="flex items-center rounded-xl gap-4 p-2 hover:bg-gray-100 cursor-pointer">
+          <a href={`/group&id=${id}`} className="font-semibold text-base text-black">{name}</a>
+        </li>
+      )
+    }
 
   return (
     <div className="w-full">
@@ -16,7 +30,7 @@ export default function SuggestedBox() {
         {/* Tags */}
         <div className="mt-5">
           <h3 className="text-sm font-semibold text-left text-black">Tags</h3>
-          <ul className="text-xs mt-2 space-y-1 font-medium text-black">
+          <ul className="text-xs mt-2 leading-5 font-medium text-black">
             {tags.map((tag, i) => (
               <li key={i} className="flex justify-between items-center cursor-pointer pl-2">
                 {tag}
@@ -33,16 +47,18 @@ export default function SuggestedBox() {
         {/* Groups */}
         <div className="mt-5">
           <h3 className="text-sm font-semibold text-left text-black">Groups</h3>
-          <ul className="text-xs mt-2 space-y-1 font-medium text-black">
-            {groups.map((group, i) => (
-              <li key={i} className="flex justify-between items-center cursor-pointer pl-2">
-                {group}
-                <img
-                  src="/arrow.svg"
-                  alt="arrow right"
-                  style={{ width: "0.75em", height: "0.75em" }}
-                />
-              </li>
+          <ul className="text-xs mt-2 leading-5 font-medium text-black">
+            {groups.map((group) => (
+               <a href={`/group&id=${group.id}`}>
+                <li key={group.id} className="flex justify-between items-center cursor-pointer pl-2">
+                  {group.name}
+                    <img
+                      src="/arrow.svg"
+                      alt="arrow right"
+                      style={{ width: "0.75em", height: "0.75em" }}
+                    />
+                </li>
+              </a>
             ))}
           </ul>
         </div>

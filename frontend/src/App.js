@@ -36,7 +36,8 @@ function App() {
     <div className="app">
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/HomeScreen" element={<HomeScreen postData={postData} />} />
+        <Route path="/home" element={<HomeScreen postData={postData} />} />
+        {/* <Route path="/group&id=:id" element={<Group />} /> */}
       </Routes>
     </div>
   );

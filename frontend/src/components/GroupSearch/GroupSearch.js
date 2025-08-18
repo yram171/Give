@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import clsx from "clsx";
+
 
 export default function GroupSearch() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -12,15 +14,15 @@ export default function GroupSearch() {
     console.log("Search for:", searchQuery);
   };
   const groups = [
-  { id: 1, name: "Group 1" },
-  { id: 2, name: "Group 2" },
-  { id: 3, name: "Group 3" },
-  { id: 4, name: "Group 4" },
-  { id: 5, name: "Group 5" },
-  { id: 6, name: "Group 6" },
-  { id: 7, name: "Group 7" },
-  { id: 8, name: "Group 8" },
-  { id: 9, name: "Group 9" }
+    { id: 1, name: "Group 1", profilePic: "/photo1.jpg" },
+    { id: 2, name: "Group 2", profilePic: "/photo2.jpg" },
+    { id: 3, name: "Group 3", profilePic: "/photo3.jpg" },
+    { id: 4, name: "Group 4", profilePic: "/group-4-avatar.png" },
+    { id: 5, name: "Group 5", profilePic: "/group-5-avatar.png" },
+    { id: 6, name: "Group 6", profilePic: "/group-6-avatar.png" },
+    { id: 7, name: "Group 7", profilePic: "/group-7-avatar.png" },
+    { id: 8, name: "Group 8", profilePic: "/group-8-avatar.png" },
+    { id: 9, name: "Group 9", profilePic: "/group-9-avatar.png" },
 ];
 
 // const posts = dataFromDB.map(doc => ({
@@ -30,13 +32,20 @@ export default function GroupSearch() {
 //   pollOptions: doc.pollOptions,
 // }));
 
-  function GroupItem({ name }) {
-  return (
-    <li className="flex items-center rounded-xl gap-4 p-2 hover:bg-gray-100 cursor-pointer">
-      <div className="w-10 h-10 rounded-full bg-gray-300" />
-      <p className="font-semibold text-base text-black">{name}</p>
-    </li>
-  );
+  function GroupItem({ group }) {
+    const { id, name, profilePic } = group;
+    return (
+      <li className="flex items-center rounded-xl gap-4 p-2 hover:bg-gray-100 cursor-pointer">
+        <div className={clsx("w-10 h-10 rounded-full overflow-hidden", { "bg-gray-300": !profilePic })}>
+            <img
+              src={`images/${profilePic}` ?? "/images/placeholder.svg"}
+              alt={`${name} profile`}
+              className="w-full h-full object-cover"
+            />
+        </div>
+        <a href={`/group&id=${id}`} className="font-semibold text-base text-black">{name}</a>
+      </li>
+    )
   }
 
   const displayedGroups = expanded ? groups : groups.slice(0, 5);
@@ -80,8 +89,8 @@ export default function GroupSearch() {
     {/* List of Groups */}
     <div className={`flex flex-col gap-2 ${expanded ? "overflow-y-auto" : ""} with-scrollbar items-start`}>
       <ul className='flex flex-col gap-2 grow'>
-          {displayedGroups.map((g) => (
-            <GroupItem key={g.id} name={g.name} />
+          {displayedGroups.map((group) => (
+            <GroupItem key={group.id} group={group} />
           ))}
       </ul>
       <button
