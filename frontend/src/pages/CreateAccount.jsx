@@ -1,7 +1,41 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
 
 const CreateAccount = () => {
-  return (
+    const [form, setForm] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+        birthday: ''
+    });
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
+
+    const handleChange = (e) => {
+        setForm({ ...form, [e.target.name]: e.target.value });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError('');
+        setSuccess('');
+        if (form.password !== form.confirmPassword) {
+            setError('Passwords do not match');
+            return;
+        }
+        try {
+            await createUserWithEmailAndPassword(auth, form.email, form.password);
+            setSuccess('Account created successfully!');
+            // Navigate to login or home
+        } catch (err) {
+            setError(err.message);
+        }
+    };
+
+    return (
     <div className="min-h-screen bg-defaultPink font-[Nunito,Poppins,sans-serif]">
       {/* Header with website name */}
       <div className="absolute top-0 left-0 p-6 z-20">
@@ -27,7 +61,7 @@ const CreateAccount = () => {
                 </p>
             </div>
 
-            <form className="bg-backgroundGrey p-8 pb-0 rounded-t-3xl flex-1 flex flex-col">
+            <form className="bg-backgroundGrey p-8 pb-0 rounded-t-3xl flex-1 flex flex-col" onSubmit={handleSubmit}>
                 <p className="text-left text-lg font-bold text-gray-900">
                     Create Account
                 </p>
@@ -42,6 +76,8 @@ const CreateAccount = () => {
                                     type="text"
                                     className="mt-1 appearance-none relative block w-full px-3 py-2 border border-transparent bg-darkGrey placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
                                     placeholder="First name"
+                                    value={form.firstName}
+                                    onChange={handleChange}
                                 />
                             </div>
                         
@@ -52,6 +88,8 @@ const CreateAccount = () => {
                                     type="text"
                                     className="mt-1 appearance-none relative block w-full px-3 py-2 border border-transparent bg-darkGrey placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
                                     placeholder="Last name"
+                                    value={form.lastName}
+                                    onChange={handleChange}
                                 />
                             </div>
                         </div>
@@ -65,6 +103,8 @@ const CreateAccount = () => {
                                 autoComplete="email"
                                 className="mt-1 appearance-none relative block w-full px-3 py-2 border border-transparent bg-darkGrey placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
                                 placeholder="Email address"
+                                value={form.email}
+                                onChange={handleChange}
                             />
                         </div>
 
@@ -77,6 +117,8 @@ const CreateAccount = () => {
                                 autoComplete="new-password"
                                 className="mt-1 appearance-none relative block w-full px-3 py-2 border border-transparent bg-darkGrey placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
                                 placeholder="Password"
+                                value={form.password}
+                                onChange={handleChange}
                             />
                         </div>
 
@@ -89,6 +131,8 @@ const CreateAccount = () => {
                                 autoComplete="new-password"
                                 className="mt-1 appearance-none relative block w-full px-3 py-2 border border-transparent bg-darkGrey placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
                                 placeholder="Confirm password"
+                                value={form.confirmPassword}
+                                onChange={handleChange}
                             />
                         </div>
 
@@ -103,6 +147,8 @@ const CreateAccount = () => {
                                 type="date"
                                 className="mt-1 appearance-none relative block w-full px-3 py-2 border border-transparent bg-darkGrey placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
                                 placeholder="Birthday"
+                                value={form.birthday}
+                                onChange={handleChange}
                             />
                         </div>
                     </div>
@@ -112,6 +158,8 @@ const CreateAccount = () => {
                         By Clicking Create Account, you agree to our Terms and Conditions and that you have read our Data Policy, including our Cookie Use. You may receive promotional Emails and SMS notifications and can opt out at any time.
                     </div>
 
+                    {error && <p className="text-red-500 text-sm">{error}</p>}
+                    {success && <p className="text-green-500 text-sm">{success}</p>}
                     <div>
                         <button
                         type="submit"
