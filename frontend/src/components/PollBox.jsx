@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 export default function PollBox({ initialOptions }) {
   const [votes, setVotes] = useState(
@@ -27,29 +27,26 @@ export default function PollBox({ initialOptions }) {
   };
 
   return (
-    <div className="w-full font-[Gothic_A1]">
-      {initialOptions.map((option, index) => (
-        <div
-          key={index}
-          className={`mb-1 cursor-pointer ${!hasVoted ? 'hover:bg-[#f2ebd9]' : ''}`}
-          onClick={() => handleVote(option.label)}
-        >
-          <div className="bg-[#fef6e7] h-10 rounded-[10px] relative overflow-hidden">
-            <div
-              className="bg-[#ffdd4a] h-full rounded-l-[10px] absolute top-0 left-0 transition-all duration-500 z-[1]"
-              style={{ width: hasVoted ? `${getPercentage(option.label)}%` : '0%' }}
+    <div className="w-full flex flex-col gap-1 cursor-pointer">
+      {initialOptions.map((option, index) => {
+        const percentage = getPercentage(option.label);
+
+        return (
+          <div key={index} 
+          className={`relative bg-pollBarGrey cursor-pointer rounded-[0.6rem] ${!hasVoted ? ' hover:bg-pollBarHover' : ''}`}
+          onClick={() => handleVote(option.label)}>
+            <span className="absolute top-0 left-0 h-full transition-all duration-500 bg-defaultYellow z-1 rounded-[0.6rem]"
+            style={{ width: hasVoted ? `${percentage}%` : '0%' }}
             />
-            <span className="absolute left-5 top-1/2 -translate-y-1/2 font-normal text-black text-xs z-[2]">
-              {option.label}
-            </span>
-            {hasVoted && (
-              <span className="absolute right-5 top-1/2 -translate-y-1/2 font-normal text-black text-xs z-[2]">
-                {getPercentage(option.label)}%
-              </span>
-            )}
+            <div
+              className="relative font-normal text-black text-[0.8rem] z-2 leading-[3.1] px-8 py-0 cursor-pointer rounded-[0.6rem] flex justify-between items-center p-2"
+            >
+              <span>{option.label}</span>
+              {percentage > 0 && <span>{percentage}%</span>}
+            </div>
           </div>
-        </div>
-      ))}
+        )
+      })}
     </div>
   );
 }

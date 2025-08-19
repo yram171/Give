@@ -1,30 +1,73 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Outlet,
+} from "react-router-dom";
+
+import "./styles/App.css";
+
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import CreateAccount from "./pages/CreateAccount";
-import "./styles/App.css";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Login />,
-  },
-  {
-    path: "/home",
-    element: <Home />,
-  },
-  {
-    path: "/create-account",
-    element: <CreateAccount />,
-  },
-]);
+async function getPostData() {
+  try {
+    const res = await fetch("http://localhost:5001/postData");
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return await res.json();
+  } catch (err) {
+    console.error("Failed to load poll:", err);
+    return err.message;
+  }
+}
 
-function App() {
+// Layout for "app-styled" routes
+function AppLayout({ postData }) {
   return (
-    <div className="App">
-      <RouterProvider router={router} />
+    <div className="app">
+      <Outlet context={{ postData }} />
     </div>
   );
+}
+
+function App() {
+  const [postData, setPostData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getPostData()
+      .then((data) => setPostData(data))
+      .catch((error) => console.error("Error fetching post data:", error))
+      .finally(() => {
+        console.log("Post data fetch completed");
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) return <p>Loading...</p>;
+
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Login />,
+    },
+    {
+      path: "/create-account",
+      element: <CreateAccount />,
+    },
+    {
+      element: <AppLayout postData={postData} />,
+      children: [
+        {
+          path: "/home",
+          element: <Home postData={postData} />,
+        },
+      ],
+    },
+  ]);
+
+  return <RouterProvider router={router} />;
 }
 
 export default App;

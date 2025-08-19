@@ -1,43 +1,45 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
 
 const CreateAccount = () => {
-  const navigate = useNavigate();
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [birthday, setBirthday] = useState('');
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+    const [form, setForm] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+        birthday: ''
+    });
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError(''); setSuccess('');
-    if (!email || !password) { setError('Email and password required'); return; }
-    if (password !== confirmPassword) { setError('Passwords do not match'); return; }
+    const handleChange = (e) => {
+        setForm({ ...form, [e.target.name]: e.target.value });
+    };
 
-    try {
-      const res = await fetch('/api/signup', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ firstName, lastName, email, password, birthday }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Signup failed');
-      setSuccess(data.message || 'Account created');
-      setTimeout(() => navigate('/'), 1200);
-    } catch (err) {
-      setError(err.message);
-    }
-  };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError('');
+        setSuccess('');
+        if (form.password !== form.confirmPassword) {
+            setError('Passwords do not match');
+            return;
+        }
+        try {
+            await createUserWithEmailAndPassword(auth, form.email, form.password);
+            setSuccess('Account created successfully!');
+            // Navigate to login or home
+        } catch (err) {
+            setError(err.message);
+        }
+    };
 
-  return (
+    return (
     <div className="min-h-screen bg-defaultPink font-[Nunito,Poppins,sans-serif]">
       {/* Header with website name */}
       <div className="absolute top-0 left-0 p-6 z-20">
-        <h1 className="text-4xl font-extrabold text-backgroundGrey">GIVE</h1>
+        <h1 className="text-4xl font-extrabold text-backgroundGrey font-header">GIVE</h1>
       </div>
       
       {/* Bar Graph Design */}
@@ -59,7 +61,7 @@ const CreateAccount = () => {
                 </p>
             </div>
 
-            <form onSubmit={handleSubmit} className="bg-backgroundGrey p-8 pb-0 rounded-t-3xl flex-1 flex flex-col">
+            <form className="bg-backgroundGrey p-8 pb-0 rounded-t-3xl flex-1 flex flex-col" onSubmit={handleSubmit}>
                 <p className="text-left text-lg font-bold text-gray-900">
                     Create Account
                 </p>
@@ -76,6 +78,8 @@ const CreateAccount = () => {
                                     onChange={(e) => setFirstName(e.target.value)}
                                     className="mt-1 appearance-none relative block w-full px-3 py-2 border border-transparent bg-darkGrey placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
                                     placeholder="First name"
+                                    value={form.firstName}
+                                    onChange={handleChange}
                                 />
                             </div>
                         
@@ -88,6 +92,8 @@ const CreateAccount = () => {
                                     onChange={(e) => setLastName(e.target.value)}
                                     className="mt-1 appearance-none relative block w-full px-3 py-2 border border-transparent bg-darkGrey placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
                                     placeholder="Last name"
+                                    value={form.lastName}
+                                    onChange={handleChange}
                                 />
                             </div>
                         </div>
@@ -103,6 +109,8 @@ const CreateAccount = () => {
                                 onChange={(e) => setEmail(e.target.value)}
                                 className="mt-1 appearance-none relative block w-full px-3 py-2 border border-transparent bg-darkGrey placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
                                 placeholder="Email address"
+                                value={form.email}
+                                onChange={handleChange}
                             />
                         </div>
 
@@ -117,6 +125,8 @@ const CreateAccount = () => {
                                 onChange={(e) => setPassword(e.target.value)}
                                 className="mt-1 appearance-none relative block w-full px-3 py-2 border border-transparent bg-darkGrey placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
                                 placeholder="Password"
+                                value={form.password}
+                                onChange={handleChange}
                             />
                         </div>
 
@@ -131,6 +141,8 @@ const CreateAccount = () => {
                                 onChange={(e) => setConfirmPassword(e.target.value)}
                                 className="mt-1 appearance-none relative block w-full px-3 py-2 border border-transparent bg-darkGrey placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
                                 placeholder="Confirm password"
+                                value={form.confirmPassword}
+                                onChange={handleChange}
                             />
                         </div>
 
@@ -147,6 +159,8 @@ const CreateAccount = () => {
                                 onChange={(e) => setBirthday(e.target.value)}
                                 className="mt-1 appearance-none relative block w-full px-3 py-2 border border-transparent bg-darkGrey placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
                                 placeholder="Birthday"
+                                value={form.birthday}
+                                onChange={handleChange}
                             />
                         </div>
                     </div>
@@ -160,6 +174,8 @@ const CreateAccount = () => {
                         By Clicking Create Account, you agree to our Terms and Conditions and that you have read our Data Policy, including our Cookie Use. You may receive promotional Emails and SMS notifications and can opt out at any time.
                     </div>
 
+                    {error && <p className="text-red-500 text-sm">{error}</p>}
+                    {success && <p className="text-green-500 text-sm">{success}</p>}
                     <div>
                         <button
                         type="submit"

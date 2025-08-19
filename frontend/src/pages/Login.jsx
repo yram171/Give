@@ -1,5 +1,6 @@
+import { signInWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { auth } from "../firebase";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -11,23 +12,11 @@ const Login = () => {
   const handleLogin = async () => {
     setError("");
     setSuccess("");
-
     try {
-      const response = await fetch("http://localhost:5000/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) throw new Error(result.error || "Login failed");
-
-      setSuccess(result.message || "Logged in successfully");
-
+      await signInWithEmailAndPassword(auth, email, password);
+      setSuccess("Logged in successfully");
       // navigate to home here
       // eg setTimeout(() => { navigate("/home");}, 2000);
-
     } catch (error) {
       setError(error.message);
     }
@@ -38,7 +27,7 @@ const Login = () => {
       <div className="w-[45%] flex justify-start items-center pl-[100px]">
         <div className="flex flex-col mb-[70px] ml-[25px] gap-1">
           <header>
-            <h1 className="text-defaultYellow text-[7rem] uppercase m-0 text-left">
+            <h1 className="text-defaultYellow text-[7rem] uppercase m-0 text-left font-header">
               Give
             </h1>
           </header>
