@@ -132,7 +132,7 @@ function NavBar() {
               className="w-full h-full rounded-full object-cover"
             />
           </div>
-          <span className="font-medium text-gray-700 text-lg">({user.name})</span>
+          <span className="font-medium text-gray-700 text-lg font-semibold">{user.name}</span>
         </div>
 
         <button className="rounded-full flex items-center justify-center">

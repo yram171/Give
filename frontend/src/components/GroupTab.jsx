@@ -26,7 +26,7 @@ export default function GroupTab({ id }) {
         <div className="flex items-center p-4 rounded-xl  bg-defaultYellow gap-3">
           <div className={clsx("w-10 h-10 rounded-full overflow-hidden border-2 border-white", { "bg-gray-300": !group.profilePic })}>
             <img
-              src={`images/${group.profilePic}` ?? "/images/placeholder.svg"}
+              src={group.profilePic ? `images/${group.profilePic}` : "/images/placeholder.svg"}
               alt={`${group.name} profile`}
               className="w-full h-full object-cover"
             />
