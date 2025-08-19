@@ -16,10 +16,10 @@ const Login = () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       setSuccess("Logged in successfully");
-      // navigate to home here
-      // eg setTimeout(() => { navigate("/home");}, 2000);
-    } catch (error) {
-      setError(error.message);
+      // redirect to home
+      setTimeout(() => navigate("/home"), 400);
+    } catch (err) {
+      setError(err.message || "Login failed");
     }
   };
 

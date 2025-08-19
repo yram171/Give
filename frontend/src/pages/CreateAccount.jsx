@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase";
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { auth } from '../firebase';
+import { useNavigate } from 'react-router-dom';
 
 const CreateAccount = () => {
     const [form, setForm] = useState({
@@ -13,6 +14,7 @@ const CreateAccount = () => {
     });
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -27,9 +29,17 @@ const CreateAccount = () => {
             return;
         }
         try {
-            await createUserWithEmailAndPassword(auth, form.email, form.password);
+            const userCredential = await createUserWithEmailAndPassword(auth, form.email, form.password);
+            const user = userCredential.user;
+
+            // Update profile with first and last name
+            await updateProfile(user, {
+                displayName: `${form.firstName} ${form.lastName}`
+            });
+
             setSuccess('Account created successfully!');
             // Navigate to login or home
+            navigate('/'); // Change this to your desired route
         } catch (err) {
             setError(err.message);
         }
