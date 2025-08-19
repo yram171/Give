@@ -1,4 +1,6 @@
+import { signInWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
+import { auth } from "../firebase";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -9,23 +11,11 @@ const Login = () => {
   const handleLogin = async () => {
     setError("");
     setSuccess("");
-
     try {
-      const response = await fetch("http://localhost:5000/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) throw new Error(result.error || "Login failed");
-
-      setSuccess(result.message || "Logged in successfully");
-
+      await signInWithEmailAndPassword(auth, email, password);
+      setSuccess("Logged in successfully");
       // navigate to home here
       // eg setTimeout(() => { navigate("/home");}, 2000);
-
     } catch (error) {
       setError(error.message);
     }
