@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import clsx from "clsx";
 
 export default function Grouptab() {
   const [showMembers, setShowMembers] = useState(false);
@@ -11,16 +12,28 @@ export default function Grouptab() {
     "@katesmith0001",
     "@katesmith0001",
   ];
+  const group = {
+    id: "1",
+    name: "Group 1",
+    profilePic: "group1.jpg",
+    members: members,
+  };
 
   return (
     <div className="w-full rounded-xl">
       <div className="bg-backgroundGrey rounded-3xl p-3">
         {/* Group Header */}
         <div className="flex items-center p-4 rounded-xl  bg-defaultYellow gap-3">
-          <div className="w-10 h-10 rounded-full bg-gray-300" />
+          <div className={clsx("w-10 h-10 rounded-full overflow-hidden border-2 border-white", { "bg-gray-300": !group.profilePic })}>
+            <img
+              src={`images/${group.profilePic}` ?? "/images/placeholder.svg"}
+              alt={`${group.name} profile`}
+              className="w-full h-full object-cover"
+            />
+          </div>
           <div>
-            <p className="font-semibold text-base text-black">Group 1</p>
-            <p className="text-xs text-black-600">6 members</p>
+            <p className="font-semibold text-base text-black">{group.name}</p>
+            <p className="text-xs text-black-600">{group.members.length} members</p>
           </div>
         </div>
 
