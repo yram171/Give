@@ -29,7 +29,7 @@ export default function Grouptab() {
           <h3 className="text-sm font-semibold text-left text-black">
             Most Used Tags
           </h3>
-          <ul className="text-xs mt-2 space-y-1 font-medium text-black">
+          <ul className="text-xs mt-2 leading-6 font-medium text-black">
             <li className="flex justify-between items-center cursor-pointer pl-2">
               #snacks{" "}
               <img
