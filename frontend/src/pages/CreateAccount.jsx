@@ -3,6 +3,9 @@ import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth } from '../firebase';
 import { useNavigate } from 'react-router-dom';
 
+// API URL (set REACT_APP_API_URL in .env or it will default to localhost:5002)
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5002';
+
 const CreateAccount = () => {
     const [form, setForm] = useState({
         firstName: '',
@@ -14,6 +17,8 @@ const CreateAccount = () => {
     });
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    const [submitting, setSubmitting] = useState(false);
+    const [firestoreError, setFirestoreError] = useState('');
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -24,24 +29,109 @@ const CreateAccount = () => {
         e.preventDefault();
         setError('');
         setSuccess('');
+        // basic validation
+        if (!form.firstName || !form.lastName || !form.email || !form.password) {
+            setError('Please fill in all required fields');
+            return;
+        }
         if (form.password !== form.confirmPassword) {
             setError('Passwords do not match');
             return;
         }
+        if (form.password.length < 6) {
+            setError('Password must be at least 6 characters');
+            return;
+        }
+
+        setSubmitting(true);
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, form.email, form.password);
             const user = userCredential.user;
 
-            // Update profile with first and last name
+            // Update profile displayName
             await updateProfile(user, {
                 displayName: `${form.firstName} ${form.lastName}`
             });
 
+            // Send profile to backend which uses Admin SDK to write to Firestore
+            try {
+                const token = await auth.currentUser.getIdToken();
+                const res = await fetch(`${API_URL}/api/saveProfile`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`,
+                    },
+                    body: JSON.stringify({
+                        firstName: form.firstName,
+                        lastName: form.lastName,
+                        displayName: `${form.firstName} ${form.lastName}`,
+                        email: form.email,
+                        birthday: form.birthday || null,
+                    }),
+                });
+                if (!res.ok) {
+                    const body = await res.json().catch(() => ({}));
+                    throw new Error(body.error || `Server responded ${res.status}`);
+                }
+            } catch (fireErr) {
+                console.error('Failed to save profile via backend:', fireErr);
+                setFirestoreError(fireErr.message || String(fireErr));
+                setError('Account created but failed to save profile. See details below and retry.');
+                setSubmitting(false);
+                return;
+            }
+
             setSuccess('Account created successfully!');
-            // Navigate to login or home
-            navigate('/'); // Change this to your desired route
+            // Navigate to home page
+            navigate('/home');
         } catch (err) {
-            setError(err.message);
+            setError(err.message || 'Failed to create account');
+        } finally {
+            setSubmitting(false);
+        }
+    };
+
+    // Retry saving profile to Firestore without creating the auth user again.
+    const retrySaveProfile = async () => {
+        setError('');
+        setFirestoreError('');
+        setSubmitting(true);
+        const user = auth.currentUser;
+        if (!user) {
+            setError('No authenticated user found. Please log in and try again.');
+            setSubmitting(false);
+            return;
+        }
+        try {
+            const userToken = await auth.currentUser.getIdToken();
+            const res = await fetch(`${API_URL}/api/saveProfile`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${userToken}`,
+                },
+                body: JSON.stringify({
+                    firstName: form.firstName,
+                    lastName: form.lastName,
+                    displayName: `${form.firstName} ${form.lastName}`,
+                    email: form.email,
+                    birthday: form.birthday || null,
+                }),
+            });
+            if (!res.ok) {
+                const body = await res.json().catch(() => ({}));
+                throw new Error(body.error || `Server responded ${res.status}`);
+            }
+            setSuccess('Profile saved successfully! Redirecting...');
+            setFirestoreError('');
+            setTimeout(() => navigate('/home'), 600);
+        } catch (err) {
+            console.error('Retry save failed:', err);
+            setFirestoreError(err.message || String(err));
+            setError('Failed to save profile. See details below.');
+        } finally {
+            setSubmitting(false);
         }
     };
 
@@ -170,6 +260,19 @@ const CreateAccount = () => {
 
                     {error && <p className="text-red-500 text-sm">{error}</p>}
                     {success && <p className="text-green-500 text-sm">{success}</p>}
+                    {firestoreError && (
+                        <div className="mt-2 p-2 bg-red-50 rounded">
+                            <p className="text-red-600 text-sm font-medium">Firestore error: {firestoreError}</p>
+                            <button
+                                type="button"
+                                disabled={submitting}
+                                onClick={retrySaveProfile}
+                                className="mt-2 bg-yellow-300 text-black px-3 py-1 rounded disabled:opacity-50"
+                            >
+                                {submitting ? 'Retrying...' : 'Retry saving profile'}
+                            </button>
+                        </div>
+                    )}
                     <div>
                         <button
                         type="submit"
