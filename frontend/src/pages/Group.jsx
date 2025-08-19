@@ -34,13 +34,15 @@ function HomeScreen({ postData }) {
       {/* min-h-0 lets children shrink and scroll correctly */}
       <main className="flex flex-1 min-h-0">
         {/* left column */}
-        <aside className="flex w-[27%] flex-col gap-4 sticky top-0 max-h-screen overflow-y-auto flex-shrink-0">
+        <aside className="flex w-[27%] flex-col gap-4 sticky top-0 max-h-screen flex-shrink-0">
           <UserInfo />
           <ScreenTabGroup />
-          <GroupTab />
+          <div className="flex-1 overflow-y-hidden">
+            <GroupTab />
+          </div>
         </aside>
 
-        {/* center column — remove h-screen, make it the scroller */}
+        {/* Centre column */}
         <section className="flex-1 min-w-0 flex flex-col gap-4 overflow-y-auto scrollbar-hide px-2">
           {posts.map((p) => (
             <Post

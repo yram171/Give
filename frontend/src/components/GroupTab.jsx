@@ -20,8 +20,8 @@ export default function Grouptab() {
   };
 
   return (
-    <div className="w-full rounded-xl">
-      <div className="bg-backgroundGrey rounded-3xl p-3">
+    <div className="w-full rounded-xl h-full">
+      <div className={`bg-backgroundGrey rounded-3xl p-3 flex flex-col ${showMembers ? 'h-full' : ''}`}>
         {/* Group Header */}
         <div className="flex items-center p-4 rounded-xl  bg-defaultYellow gap-3">
           <div className={clsx("w-10 h-10 rounded-full overflow-hidden border-2 border-white", { "bg-gray-300": !group.profilePic })}>
@@ -71,7 +71,7 @@ export default function Grouptab() {
         </div>
 
         {/* View Members */}
-        <div className="mt-5">
+        <div className='mt-5 with-scrollbar overflow-y-auto flex-1'>
           <button
             className="flex justify-between w-full font-semibold text-sm"
             onClick={() => setShowMembers(!showMembers)}
@@ -104,7 +104,7 @@ export default function Grouptab() {
 
           <div
             className={`overflow-hidden transition-all duration-500 ease-in-out ${
-              showMembers ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+              showMembers ? "max-h-96 opacity-100" : "max-h-0 opacity-0 hidden with-scrollbar"
             }`}
           >
             <ul className="mt-3 space-y-2">

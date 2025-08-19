@@ -40,7 +40,7 @@ function HomeScreen({ postData }) {
           <SuggestedBox />
         </aside>
 
-        {/* center column — remove h-screen, make it the scroller */}
+        {/* center column */}
         <section className="flex-1 min-w-0 flex flex-col gap-4 overflow-y-auto scrollbar-hide px-2">
           {posts.map((p) => (
             <Post
