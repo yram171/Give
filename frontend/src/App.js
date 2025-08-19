@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import {
   createBrowserRouter,
   RouterProvider,
+  Outlet,
 } from "react-router-dom";
 
 import "./styles/App.css";
@@ -19,6 +20,15 @@ async function getPostData() {
     console.error("Failed to load poll:", err);
     return err.message;
   }
+}
+
+// Layout for "app-styled" routes
+function AppLayout({ postData }) {
+  return (
+    <div className="app">
+      <Outlet context={{ postData }} />
+    </div>
+  );
 }
 
 function App() {
@@ -43,20 +53,21 @@ function App() {
       element: <Login />,
     },
     {
-      path: "/home",
-      element: <Home postData={postData} />, // ✅ pass postData
-    },
-    {
       path: "/create-account",
       element: <CreateAccount />,
     },
+    {
+      element: <AppLayout postData={postData} />,
+      children: [
+        {
+          path: "/home",
+          element: <Home postData={postData} />,
+        },
+      ],
+    },
   ]);
 
-  return (
-    <div className="app">
-      <RouterProvider router={router} />
-    </div>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;

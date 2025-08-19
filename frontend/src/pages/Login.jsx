@@ -36,7 +36,7 @@ const Login = () => {
       <div className="w-[45%] flex justify-start items-center pl-[100px]">
         <div className="flex flex-col mb-[70px] ml-[25px] gap-1">
           <header>
-            <h1 className="text-defaultYellow text-[7rem] uppercase m-0 text-left">
+            <h1 className="text-defaultYellow text-[7rem] uppercase m-0 text-left font-header">
               Give
             </h1>
           </header>

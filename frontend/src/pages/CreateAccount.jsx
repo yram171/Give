@@ -5,7 +5,7 @@ const CreateAccount = () => {
     <div className="min-h-screen bg-defaultPink font-[Nunito,Poppins,sans-serif]">
       {/* Header with website name */}
       <div className="absolute top-0 left-0 p-6 z-20">
-        <h1 className="text-4xl font-extrabold text-backgroundGrey">GIVE</h1>
+        <h1 className="text-4xl font-extrabold text-backgroundGrey font-header">GIVE</h1>
       </div>
       
       {/* Bar Graph Design */}
