@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import clsx from "clsx";
 
-export default function Grouptab() {
+export default function GroupTab({ id }) {
   const [showMembers, setShowMembers] = useState(false);
 
   const members = [
@@ -32,7 +32,7 @@ export default function Grouptab() {
             />
           </div>
           <div>
-            <p className="font-semibold text-base text-black">{group.name}</p>
+            <p className="font-semibold text-base text-black">{"Group "+ id}</p>
             <p className="text-xs text-black-600">{group.members.length} members</p>
           </div>
         </div>

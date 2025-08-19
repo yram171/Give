@@ -58,7 +58,7 @@ export default function GroupSearch() {
           />
         </div>
         <a
-          href={`/group&id=${id}`}
+          href={`/group?id=${id}`}
           className="font-semibold text-base text-black group-hover:text-black/40"
         >
           {name}
