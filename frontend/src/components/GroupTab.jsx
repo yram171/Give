@@ -13,8 +13,8 @@ export default function Grouptab() {
   ];
 
   return (
-    <div className="w-72 p-4 rounded-xl">
-      <div className="bg-backgroundGrey rounded-xl p-4">
+    <div className="w-full rounded-xl">
+      <div className="bg-backgroundGrey rounded-3xl p-3">
         {/* Group Header */}
         <div className="flex items-center p-4 rounded-xl  bg-defaultYellow gap-3">
           <div className="w-10 h-10 rounded-full bg-gray-300" />
@@ -29,8 +29,8 @@ export default function Grouptab() {
           <h3 className="text-sm font-semibold text-left text-black">
             Most Used Tags
           </h3>
-          <ul className="text-sm mt-2 space-y-1 font-medium text-black">
-            <li className="flex justify-between items-center cursor-pointer">
+          <ul className="text-xs mt-2 space-y-1 font-medium text-black">
+            <li className="flex justify-between items-center cursor-pointer pl-2">
               #snacks{" "}
               <img
                 src="/arrow.svg"
@@ -38,7 +38,7 @@ export default function Grouptab() {
                 style={{ width: "0.75em", height: "0.75em" }}
               />
             </li>
-            <li className="flex justify-between items-center cursor-pointer">
+            <li className="flex justify-between items-center cursor-pointer pl-2">
               #movie{" "}
               <img
                 src="/arrow.svg"
@@ -46,7 +46,7 @@ export default function Grouptab() {
                 style={{ width: "0.75em", height: "0.75em" }}
               />
             </li>
-            <li className="flex justify-between items-center cursor-pointer">
+            <li className="flex justify-between items-center cursor-pointer pl-2">
               #dinner{" "}
               <img
                 src="/arrow.svg"

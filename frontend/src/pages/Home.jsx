@@ -1,58 +1,66 @@
-import React, { useState, useEffect } from "react";
-import Post from "../components/Post";
-import GroupTab from "../components/GroupTab";
-import NavBar from "../components/NavBar";
-import "../styles/App.css";
+import React from "react";
+import { Post, SuggestedBox, UserInfo, NavBar, ScreenTab, GroupSearch } from "../";
+import { useState, useMemo } from "react";
 
-async function getPostData() {
-  try {
-    const res = await fetch("http://localhost:5001/postData");
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return await res.json();
-  } catch (err) {
-    console.error("Failed to load poll:", err);
-    return err.message;
-  }
-}
+function HomeScreen({ postData }) {
+  const [searchQuery, setSearchQuery] = useState("");
+  
+    const handleSearchChange = (e) => {
+      setSearchQuery(e.target.value);
+    };
+  
+    const handleSearchSubmit = (e) => {
+      e.preventDefault();
+      console.log("Search for:", searchQuery);
+      // TODO: route to results page or trigger fetch here
+    };
 
-function Home() {
-  const [postData, setPostData] = useState(null);
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    getPostData()
-      .then((data) => {
-        setPostData(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching post data:", error);
-      })
-      .finally(() => {
-        console.log("Post data fetch completed");
-        setLoading(false);
-      });
-  }, []);
+  // Hardcoded list for now; replace with fetched DB data later
+  const posts = [
+    postData, 
+    { ...postData, post: { ...postData.post, id: "p2", question: "Favourite movie snack?" } },
+    { ...postData, post: { ...postData.post, id: "p3", question: "Dinner plans tonight?" } },
+  ];
 
-  if (loading) return <p>Loading...</p>;
 
   return (
-    <div className="App flex flex-col">
-      <NavBar />
-      <div className="flex">
+    <div className="font-sans">
+    <div className="h-screen flex flex-col overflow-hidden">
+      <header className="shrink-0">
+       <NavBar />
+      </header>
+
+      {/* min-h-0 lets children shrink and scroll correctly */}
+      <main className="flex flex-1 min-h-0">
         {/* left column */}
-        <GroupTab />
-        <div>
-          {/* middle column */}
-          <Post
-            user={postData.user}
-            group={postData.group}
-            post={postData.post}
-            pollOptions={postData.pollOptions}
-          />
-        </div>
-      </div>
+        <aside className="flex w-[27%] flex-col gap-4 sticky top-0 max-h-screen overflow-y-auto flex-shrink-0">
+          <UserInfo />
+          <ScreenTab />
+          <SuggestedBox />
+        </aside>
+
+        {/* center column — remove h-screen, make it the scroller */}
+        <section className="flex-1 min-w-0 flex flex-col gap-4 overflow-y-auto scrollbar-hide px-2">
+          {posts.map((p) => (
+            <Post
+              key={p.post.id}
+              user={p.user}
+              group={p.group}
+              post={p.post}
+              pollOptions={p.pollOptions}
+            />
+          ))}
+        </section>
+
+        {/* right column */}
+        <aside className="flex w-[27%] flex-col sticky top-0 max-h-screen flex-shrink-0 scrollbar-groupSearch">
+          <GroupSearch />
+        </aside>
+      </main>
+    </div>
     </div>
   );
 }
 
-export default Home;
+export default HomeScreen;

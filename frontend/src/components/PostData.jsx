@@ -16,6 +16,7 @@ const settings = {
   arrows: false,
 };
 
+
 const PostData = ({ post }) => {
   const hasContent = post.content && post.content.length > 0;
 
