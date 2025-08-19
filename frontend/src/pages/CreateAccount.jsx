@@ -18,7 +18,6 @@ const CreateAccount = () => {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [submitting, setSubmitting] = useState(false);
-    const [firestoreError, setFirestoreError] = useState('');
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -76,8 +75,19 @@ const CreateAccount = () => {
                 }
             } catch (fireErr) {
                 console.error('Failed to save profile via backend:', fireErr);
-                setFirestoreError(fireErr.message || String(fireErr));
-                setError('Account created but failed to save profile. See details below and retry.');
+                // Attempt to rollback: delete the newly created auth user so no orphan account exists
+                try {
+                    // prefer the user object we have
+                    if (user && user.delete) {
+                        await user.delete();
+                    } else if (auth.currentUser) {
+                        await auth.currentUser.delete();
+                    }
+                    setError('Failed to save profile. Account creation was rolled back. Please try again.');
+                } catch (delErr) {
+                    console.error('Failed to delete user after profile save failure:', delErr);
+                    setError('Failed to save profile, and automatic rollback failed. Please contact support.');
+                }
                 setSubmitting(false);
                 return;
             }
@@ -87,49 +97,6 @@ const CreateAccount = () => {
             navigate('/home');
         } catch (err) {
             setError(err.message || 'Failed to create account');
-        } finally {
-            setSubmitting(false);
-        }
-    };
-
-    // Retry saving profile to Firestore without creating the auth user again.
-    const retrySaveProfile = async () => {
-        setError('');
-        setFirestoreError('');
-        setSubmitting(true);
-        const user = auth.currentUser;
-        if (!user) {
-            setError('No authenticated user found. Please log in and try again.');
-            setSubmitting(false);
-            return;
-        }
-        try {
-            const userToken = await auth.currentUser.getIdToken();
-            const res = await fetch(`${API_URL}/api/saveProfile`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${userToken}`,
-                },
-                body: JSON.stringify({
-                    firstName: form.firstName,
-                    lastName: form.lastName,
-                    displayName: `${form.firstName} ${form.lastName}`,
-                    email: form.email,
-                    birthday: form.birthday || null,
-                }),
-            });
-            if (!res.ok) {
-                const body = await res.json().catch(() => ({}));
-                throw new Error(body.error || `Server responded ${res.status}`);
-            }
-            setSuccess('Profile saved successfully! Redirecting...');
-            setFirestoreError('');
-            setTimeout(() => navigate('/home'), 600);
-        } catch (err) {
-            console.error('Retry save failed:', err);
-            setFirestoreError(err.message || String(err));
-            setError('Failed to save profile. See details below.');
         } finally {
             setSubmitting(false);
         }
@@ -260,19 +227,7 @@ const CreateAccount = () => {
 
                     {error && <p className="text-red-500 text-sm">{error}</p>}
                     {success && <p className="text-green-500 text-sm">{success}</p>}
-                    {firestoreError && (
-                        <div className="mt-2 p-2 bg-red-50 rounded">
-                            <p className="text-red-600 text-sm font-medium">Firestore error: {firestoreError}</p>
-                            <button
-                                type="button"
-                                disabled={submitting}
-                                onClick={retrySaveProfile}
-                                className="mt-2 bg-yellow-300 text-black px-3 py-1 rounded disabled:opacity-50"
-                            >
-                                {submitting ? 'Retrying...' : 'Retry saving profile'}
-                            </button>
-                        </div>
-                    )}
+
                     <div>
                         <button
                         type="submit"
