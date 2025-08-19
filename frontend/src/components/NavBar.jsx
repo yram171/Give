@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from '../contexts/AuthContext';
 import { ReactComponent as NotificationIcon } from "../assets/notification.svg";
 import { ReactComponent as SettingsIcon } from "../assets/settings.svg";
 
@@ -15,6 +16,9 @@ import { ReactComponent as SettingsIcon } from "../assets/settings.svg";
   ];
 
 function NavBar() {
+  const { user } = useAuth();
+  const displayName = user?.displayName || (user?.email ? user.email.split('@')[0] : 'User');
+  const profilePic = user?.photoURL || 'https://placehold.co/600x400.png';
   
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
@@ -121,12 +125,12 @@ function NavBar() {
         <div className="flex items-center gap-2 cursor-pointer rounded-[25px]">
           <div className="w-[45px] h-[45px]">
             <img
-              src="https://placehold.co/600x400.png"
-              alt="User Avatar"
+              src={profilePic}
+              alt={`${displayName} Avatar`}
               className="w-full h-full rounded-full object-cover"
             />
           </div>
-          <span className="font-medium text-gray-700 text-lg">Kate Smith</span>
+          <span className="font-medium text-gray-700 text-lg">{displayName}</span>
         </div>
 
         <button className="rounded-full flex items-center justify-center">
