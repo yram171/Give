@@ -231,7 +231,7 @@ const CreateAccount = () => {
                     <div>
                         <button
                         type="submit"
-                        className="group relative w-full flex justify-center py-2 px-4 border border-transparent font-extrabold rounded-md text-white bg-yellow-300 hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-300 transition duration-150 ease-in-out"
+                        className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-base rounded-md text-white bg-defaultYellow hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-300 transition duration-150 ease-in-out"
                         >
                         Create Account
                         </button>
@@ -242,7 +242,8 @@ const CreateAccount = () => {
                             Already have an account?{' '}
                             <button
                                 type="button"
-                                className="font-medium text-yellow-400 hover:text-yellow-500 transition duration-150 ease-in-out"
+                                onClick={() => navigate('/')}
+                                className="font-medium text-yellow-500 hover:text-yellow-700 transition duration-150 ease-in-out"
                             >
                                 Sign in here
                             </button>
