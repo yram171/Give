@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth } from '../firebase';
 import { useNavigate } from 'react-router-dom';
+import mapAuthError from '../utils/authErrors';
 
 // API URL (set REACT_APP_API_URL in .env or it will default to localhost:5000)
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
@@ -29,16 +30,16 @@ const CreateAccount = () => {
         setError('');
         setSuccess('');
         // basic validation
-        if (!form.firstName || !form.lastName || !form.email || !form.password) {
-            setError('Please fill in all required fields');
+        if (!form.firstName || !form.lastName || !form.email || !form.password || !form.confirmPassword || !form.birthday) {
+            setError('Please fill in all the fields.');
             return;
         }
         if (form.password !== form.confirmPassword) {
-            setError('Passwords do not match');
+            setError('Passwords do not match.');
             return;
         }
         if (form.password.length < 6) {
-            setError('Password must be at least 6 characters');
+            setError('Password must be at least 6 characters long.');
             return;
         }
 
@@ -98,7 +99,8 @@ const CreateAccount = () => {
             // Navigate to home page
             navigate('/home');
         } catch (err) {
-            setError(err.message || 'Failed to create account');
+            // map firebase/internal errors to friendly messages
+            setError(mapAuthError(err));
         } finally {
             setSubmitting(false);
         }

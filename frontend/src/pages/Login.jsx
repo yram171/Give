@@ -1,7 +1,8 @@
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../firebase";
+import mapAuthError from '../utils/authErrors';
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -14,12 +15,22 @@ const Login = () => {
     setError("");
     setSuccess("");
     try {
+      // If a different user is currently signed in, sign them out first
+      if (auth.currentUser && auth.currentUser.email && auth.currentUser.email !== email) {
+        if (process.env.NODE_ENV !== 'production') console.log('Signing out current user before sign-in attempt', auth.currentUser.email);
+        try {
+          await signOut(auth);
+        } catch (signOutErr) {
+          if (process.env.NODE_ENV !== 'production') console.error('Failed to sign out existing user before signIn:', signOutErr);
+          // proceed to attempt sign-in anyway
+        }
+      }
       await signInWithEmailAndPassword(auth, email, password);
       setSuccess("Logged in successfully");
       // redirect to home
       setTimeout(() => navigate("/home"), 400);
     } catch (err) {
-      setError(err.message || "Login failed");
+      setError(mapAuthError(err));
     }
   };
 
