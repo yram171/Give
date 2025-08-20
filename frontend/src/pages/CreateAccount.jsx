@@ -3,8 +3,8 @@ import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth } from '../firebase';
 import { useNavigate } from 'react-router-dom';
 
-// API URL (set REACT_APP_API_URL in .env or it will default to localhost:5002)
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5002';
+// API URL (set REACT_APP_API_URL in .env or it will default to localhost:5000)
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
 const CreateAccount = () => {
     const [form, setForm] = useState({
@@ -54,7 +54,7 @@ const CreateAccount = () => {
 
             // Send profile to backend which uses Admin SDK to write to Firestore
             try {
-                const token = await auth.currentUser.getIdToken();
+                const token = await (user.getIdToken ? user.getIdToken() : auth.currentUser.getIdToken());
                 const res = await fetch(`${API_URL}/api/saveProfile`, {
                     method: 'POST',
                     headers: {
@@ -71,7 +71,9 @@ const CreateAccount = () => {
                 });
                 if (!res.ok) {
                     const body = await res.json().catch(() => ({}));
-                    throw new Error(body.error || `Server responded ${res.status}`);
+                    const serverMsg = body.error || `Server responded ${res.status}`;
+                    console.error('Backend saveProfile error:', serverMsg);
+                    throw new Error(serverMsg);
                 }
             } catch (fireErr) {
                 console.error('Failed to save profile via backend:', fireErr);
