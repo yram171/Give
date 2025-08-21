@@ -15,11 +15,6 @@ import clsx from "clsx";
     { label: "#dinner", url: "/tags&id=dinner" },
     { label: "#hair", url: "/tags&id=hair" },
   ];
-  const user = {
-    id: "1",
-    name: "Kate Smith",
-    profilePic: "https://placehold.co/600x400.png",
-  };
 
 function NavBar() {
   const { user } = useAuth();
