@@ -1,80 +1,42 @@
 import React from "react";
-import { Post, GroupTab, UserInfo, NavBar, ScreenTabGroup, GroupSearch } from "../";
-import { useState, useMemo } from "react";
-import { useAuth } from '../contexts/AuthContext';
-import { Navigate } from 'react-router-dom';
+import AppLayout from "../layouts/AppLayout";
+import LeftSidebar from "../components/LeftSideBar";
+import PostsList from "../components/PostsList";
+import { GroupTab, GroupSearch, CreatePost } from "../";
+import { useAuth } from "../contexts/AuthContext";
+import { Navigate } from "react-router-dom";
+import { usePosts } from "../hooks/UsePosts";
+import { groupTabConfig } from "../config/tabConfig";
 
-const Group = ({postData}) => {
-  const id = new URLSearchParams(window.location.search).get('id');
-  const [searchQuery, setSearchQuery] = useState("");
-  const { user, loading } = useAuth();
+export default function Group() {
+  const id = new URLSearchParams(window.location.search).get("id");
+  const { user, loading: authLoading } = useAuth();
+  const { posts, loading: postsLoading } = usePosts();
 
-  const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value);
-  };
+  const currentTab = "group";
+  const handleTabChange = () => {};
 
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    console.log("Search for:", searchQuery);
-    // TODO: route to results page or trigger fetch here
-  };
-
-  // Hardcoded list for now; replace with fetched DB data later
-  const posts = [
-    {...postData}, 
-    { ...postData, post: { ...postData.post, id: "p2", question: "Favourite movie snack?" } },
-    { ...postData, post: { ...postData.post, id: "p3", question: "Dinner plans tonight?" } },
-  ];
-
-  console.log('postData: ', postData)
-  // While auth is resolving, don't render anything (avoids flicker)
-  if (loading) return null;
-
-  // Redirect unauthenticated users to login
+  if (authLoading) return null;
   if (!user) return <Navigate to="/" replace />;
 
-  console.log('postData: ', postData)
-
-
   return (
-    <div className="font-sans">
-    <div className="h-screen flex flex-col overflow-hidden">
-      <header className="shrink-0">
-       <NavBar />
-      </header>
-
-      {/* min-h-0 lets children shrink and scroll correctly */}
-      <main className="flex flex-1 min-h-0">
-        {/* left column */}
-        <aside className="flex w-[27%] flex-col gap-4 sticky top-0 max-h-screen flex-shrink-0">
-          <UserInfo />
-          <ScreenTabGroup />
-          <div className="flex-1 overflow-y-hidden">
-            <GroupTab id={id} />
-          </div>
-        </aside>
-
-        {/* Centre column */}
-        <section className="flex-1 min-w-0 flex flex-col gap-4 overflow-y-auto scrollbar-hide px-2">
-          {posts.map((post) => (
-            <Post
-              key={post.id}
-              user={postData.user}
-              group={postData.group}
-              post={postData.post}
-              // pollOptions={post.pollOptions}
-            />
-          ))}
-        </section>
-
-        {/* right column */}
-        <aside className="flex w-[27%] flex-col sticky top-0 max-h-screen flex-shrink-0 scrollbar-groupSearch">
-          <GroupSearch />
-        </aside>
-      </main>
-    </div>
-    </div>
+    <AppLayout
+      left={
+        <LeftSidebar
+          screenTabProps={{
+            tabConfig: groupTabConfig,
+            onTabChange: handleTabChange,
+            onCurrentTab: currentTab,
+          }}
+          extra={
+            <div className="flex-1 overflow-y-hidden">
+              <GroupTab id={id} />
+            </div>
+          }
+        />
+      }
+      center={<PostsList posts={posts} />}
+      right={<GroupSearch />}
+    />
   );
 }
-
-export default Group;
