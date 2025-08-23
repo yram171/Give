@@ -105,11 +105,6 @@ export default function GroupTab({ id }) {
               mostUsedTags.map((tag) => (
                 <li key={tag} className="flex justify-between items-center cursor-pointer pl-2">
                   {tag}
-                  <img
-                    src="/arrow.svg"
-                    alt="arrow right"
-                    style={{ width: "0.75em", height: "0.75em" }}
-                  />
                 </li>
               ))
             )}
