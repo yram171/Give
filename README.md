@@ -35,8 +35,15 @@ The following should be installed:
   npm start
   ```
 
-**The app should now be running at:**
+The app should now be running at:
   http://localhost:3000
+
+**How to run the the test suite**
+```
+cd frontend
+npm test -- --watchAll
+```
+
 
 ## License
 This project is licensed under the **MIT License**.
@@ -52,7 +59,7 @@ Currently we only have 1 version available
 
 | Version | Status     | Notes                   |
 |---------|------------|-------------------------|
-| v1.0.0  | Stable     | Initial public release  |
+| v0.0.0  | Unstable   | Development             |
 
 
 ## Where can I get more help, if I need it?
