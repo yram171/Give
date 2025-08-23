@@ -1,3 +1,6 @@
+/**
+ * Home page component.
+ */
 import React, { useState } from "react";
 import AppLayout from "../layouts/AppLayout";
 import LeftSidebar from "../components/LeftSideBar";
@@ -8,6 +11,10 @@ import { Navigate } from "react-router-dom";
 import { usePosts } from "../hooks/UsePosts";
 import { homeTabConfig } from "../config/tabConfig";
 
+/**
+ * Home page component.
+ * @returns {JSX.Element}
+ */
 export default function HomeScreen() {
   const { user } = useAuth();
   const { posts, loading } = usePosts();

@@ -1,3 +1,7 @@
+/**
+ * Main application entry point for the frontend React app.
+ * Handles routing, authentication context, and post data fetching.
+ */
 import { useState, useEffect } from "react";
 import {
   createBrowserRouter,
@@ -6,7 +10,6 @@ import {
 } from "react-router-dom";
 
 import "./styles/App.css";
-
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import CreateAccount from "./pages/CreateAccount";
@@ -14,6 +17,10 @@ import { AuthProvider } from './contexts/AuthContext';
 import RequireAuth from './components/RequireAuth';
 import Group from "./pages/Group";
 
+/**
+ * Fetch post data from the backend API.
+ * @returns {Promise<Object>} Resolves to post data from the backend.
+ */
 export async function getPostData({
   limitCount = 10,
   orderByField = "createdAt",
@@ -29,8 +36,12 @@ export async function getPostData({
   return res.json();
 }
 
-
-// Layout for "app-styled" routes
+/**
+ * Layout component for app-styled routes.
+ * Passes postData to child routes via Outlet context.
+ * @param {Object} param.postData - The post data to provide to child routes.
+ * @returns {JSX.Element}
+ */
 function AppLayout({ postData }) {
   return (
     <div className="app">
@@ -39,6 +50,10 @@ function AppLayout({ postData }) {
   );
 }
 
+/**
+ * Main App component. Sets up routing and fetches post data on mount.
+ * @returns {JSX.Element}
+ */
 function App() {
   const [postData, setPostData] = useState(null);
 

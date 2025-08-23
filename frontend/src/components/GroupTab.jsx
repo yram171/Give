@@ -1,6 +1,15 @@
+/**
+ * Group tab component.
+ */
 import React, { useState } from "react";
 import clsx from "clsx";
 
+/**
+ * Group tab component.
+ * @param {Object} param0 - The component props.
+ * @param {string} param0.id - The ID of the group.
+ * @returns {JSX.Element}
+ */
 export default function GroupTab({ id }) {
   const [showMembers, setShowMembers] = useState(false);
 
