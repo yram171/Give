@@ -1,7 +1,8 @@
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import "../styles/App.css"; 
+import "../styles/App.css";
+import PollBox from "./PollBox";
 
 const baseSettings = {
   dots: true,
@@ -15,15 +16,16 @@ const baseSettings = {
   arrows: false,
 };
 
-const PostData = ({ post }) => {
+const PostData = ({ post, refreshPosts }) => {
   const question = post?.question ?? "";
   const contentText = typeof post?.content === "string" ? post.content : "";
   const images = Array.isArray(post?.mediaUrls)
     ? post.mediaUrls
-    : Array.isArray(post?.content) 
+    : Array.isArray(post?.content)
     ? post.content
     : [];
   const tags = Array.isArray(post?.tags) ? post.tags : [];
+  const polls = Array.isArray(post?.polls) ? post.polls : [];
 
   // Adjust slider behavior based on image count
   const settings = {
@@ -54,6 +56,16 @@ const PostData = ({ post }) => {
             </div>
           ))}
         </Slider>
+      )}
+
+      {/* ✅ Poll rendering */}
+      {polls.length > 0 && (
+        <PollBox
+          postId={post.id}
+          initialOptions={polls}
+          refreshPosts={refreshPosts}
+          post={post}
+        />
       )}
 
       {tags.length > 0 && (
