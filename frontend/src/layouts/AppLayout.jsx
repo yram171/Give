@@ -1,6 +1,19 @@
 import React from "react";
 import { NavBar } from "../";
 
+/**
+ * AppLayout component for the main application structure.
+ *
+ * Provides a three-column layout with a navigation bar at the top.
+ * Renders left sidebar, center content, and right sidebar as provided by props.
+ *
+ * @component
+ * @param {Object} props
+ * @param {React.ReactNode} props.left - Content for the left sidebar.
+ * @param {React.ReactNode} props.center - Main center content.
+ * @param {React.ReactNode} props.right - Content for the right sidebar.
+ * @returns {JSX.Element} The rendered application layout.
+ */
 export default function AppLayout({ left, center, right }) {
   return (
     <div className="font-sans">
