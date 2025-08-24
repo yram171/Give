@@ -1,39 +1,95 @@
-import React, { useState } from "react";
+/**
+ * Group tab component.
+ */
+import React, { useState, useEffect } from "react";
 import clsx from "clsx";
+import { doc, getDoc, collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "../firebase";
 
+/**
+ * Group tab component.
+ * @param {Object} param0 - The component props.
+ * @param {string} param0.id - The ID of the group.
+ * @returns {JSX.Element}
+ */
 export default function GroupTab({ id }) {
   const [showMembers, setShowMembers] = useState(false);
+  const [group, setGroup] = useState(null);
+  const [memberNames, setMemberNames] = useState([]);
+  const [mostUsedTags, setMostUsedTags] = useState([]);
 
-  const members = [
-    "@katesmith0001",
-    "@katesmith0001",
-    "@katesmith0001",
-    "@katesmith0001",
-    "@katesmith0001",
-    "@katesmith0001",
-  ];
-  const group = {
-    id: "1",
-    name: "Group 1",
-    profilePic: "group1.jpg",
-    members: members,
-  };
+  /**
+   * Fetch group information, member names, and most used tags.
+   */
+  useEffect(() => {
+    async function fetchGroupAndMembersAndTags() {
+      // Fetch group document
+      const groupRef = doc(db, "groups", id);
+      const groupSnap = await getDoc(groupRef);
+      if (groupSnap.exists()) {
+        const groupData = groupSnap.data();
+        setGroup(groupData);
+        // Fetch user displayNames for each user ID in groupData.users
+        let memberIds = Array.isArray(groupData.users) ? groupData.users : [];
+        if (memberIds.length > 0) {
+          const userDisplayNames = await Promise.all(
+            memberIds.map(async (userId) => {
+              const userRef = doc(db, "users", userId);
+              const userSnap = await getDoc(userRef);
+              if (userSnap.exists()) {
+                return userSnap.data().displayName || userId;
+              }
+              return userId;
+            })
+          );
+          setMemberNames(userDisplayNames);
+          // Fetch posts by these users
+          const postsRef = collection(db, "posts");
+          let allPosts = [];
+          for (let i = 0; i < memberIds.length; i += 10) {
+            const batchIds = memberIds.slice(i, i + 10);
+            const postsQ = query(postsRef, where("authorId", "in", batchIds));
+            const postsSnap = await getDocs(postsQ);
+            allPosts = allPosts.concat(postsSnap.docs.map((d) => d.data()));
+          }
+          // Collect all tags
+          let tagCounts = {};
+          allPosts.forEach(post => {
+            let tags = Array.isArray(post.tags) ? post.tags : (post.tags ? [post.tags] : []);
+            tags.forEach(tag => {
+              tagCounts[tag] = (tagCounts[tag] || 0) + 1;
+            });
+          });
+          // Sort tags by frequency
+          const sortedTags = Object.entries(tagCounts)
+            .sort((a, b) => b[1] - a[1])
+            .map(([tag]) => tag)
+            .slice(0, 3);
+          setMostUsedTags(sortedTags);
+        } else {
+          setMemberNames([]);
+          setMostUsedTags([]);
+        }
+      }
+    }
+    fetchGroupAndMembersAndTags();
+  }, [id]);
 
   return (
     <div className="w-full rounded-xl h-full">
       <div className={`bg-backgroundGrey rounded-3xl p-3 flex flex-col ${showMembers ? 'h-full' : ''}`}>
         {/* Group Header */}
         <div className="flex items-center p-4 rounded-xl  bg-defaultYellow gap-3">
-          <div className={clsx("w-10 h-10 rounded-full overflow-hidden border-2 border-white", { "bg-gray-300": !group.profilePic })}>
+          <div className={clsx("w-10 h-10 rounded-full overflow-hidden border-2 border-white", { "bg-gray-300": !group?.profilePic })}>
             <img
-              src={group.profilePic ? `images/${group.profilePic}` : "/images/placeholder.svg"}
-              alt={`${group.name} profile`}
+              src={group?.profilePic ? `images/${group.profilePic}` : "/images/placeholder.svg"}
+              alt={`${group?.name || "Group"} profile`}
               className="w-full h-full object-cover"
             />
           </div>
-          <div>
-            <p className="font-semibold text-base text-black">{"Group "+ id}</p>
-            <p className="text-xs text-black-600">{group.members.length} members</p>
+          <div className="flex flex-col items-start">
+            <p className="font-semibold text-base text-black">{group ? group.name : `Group ${id}`}</p>
+            <span className="text-xs text-black-600 mt-1">{memberNames.filter(Boolean).length} members</span>
           </div>
         </div>
 
@@ -42,36 +98,21 @@ export default function GroupTab({ id }) {
           <h3 className="text-sm font-semibold text-left text-black">
             Most Used Tags
           </h3>
-          <ul className="text-xs mt-2 leading-6 font-medium text-black">
-            <li className="flex justify-between items-center cursor-pointer pl-2">
-              #snacks{" "}
-              <img
-                src="/arrow.svg"
-                alt="arrow right"
-                style={{ width: "0.75em", height: "0.75em" }}
-              />
-            </li>
-            <li className="flex justify-between items-center cursor-pointer pl-2">
-              #movie{" "}
-              <img
-                src="/arrow.svg"
-                alt="arrow right"
-                style={{ width: "0.75em", height: "0.75em" }}
-              />
-            </li>
-            <li className="flex justify-between items-center cursor-pointer pl-2">
-              #dinner{" "}
-              <img
-                src="/arrow.svg"
-                alt="arrow right"
-                style={{ width: "0.75em", height: "0.75em" }}
-              />
-            </li>
+          <ul className="text-xs font-semibold mt-2 leading-6 font-medium text-black">
+            {mostUsedTags.length === 0 ? (
+              <li className="pl-2">No tags found</li>
+            ) : (
+              mostUsedTags.map((tag) => (
+                <li key={tag} className="flex justify-between items-center cursor-pointer pl-2">
+                  {tag}
+                </li>
+              ))
+            )}
           </ul>
         </div>
 
         {/* View Members */}
-        <div className='mt-5 with-scrollbar overflow-y-auto flex-1'>
+        <div className='mt-5 with-scrollbar overflow-y-auto'>
           <button
             className="flex justify-between w-full font-semibold text-sm"
             onClick={() => setShowMembers(!showMembers)}
@@ -104,18 +145,19 @@ export default function GroupTab({ id }) {
 
           <div
             className={`overflow-hidden transition-all duration-500 ease-in-out ${
-              showMembers ? "max-h-96 opacity-100" : "max-h-0 opacity-0 hidden with-scrollbar"
+              showMembers ? "opacity-100" : "max-h-0 opacity-0 hidden with-scrollbar"
             }`}
+            style={showMembers ? { maxHeight: `${memberNames.length * 40}px` } : { maxHeight: 0 }}
           >
             <ul className="mt-3 space-y-2">
-              {members.map((name, index) => (
+              {memberNames.map((displayName, index) => (
                 <li key={index} className="flex items-center gap-2 text-sm">
                   <img
                     src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png"
                     alt="avatar"
                     className="w-5 h-5"
                   />
-                  {name}
+                  {displayName}
                 </li>
               ))}
             </ul>

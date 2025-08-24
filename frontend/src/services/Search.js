@@ -1,3 +1,6 @@
+/**
+ * Search service for querying users, groups, and posts.
+ */
 import { collection, getDocs, limit, query } from "firebase/firestore";
 import { db } from "../firebase";
 
@@ -7,9 +10,25 @@ const warn = (...a) => DEBUG && console.warn("[search]", ...a);
 const group = (label) => DEBUG && console.groupCollapsed(label);
 const groupEnd = () => DEBUG && console.groupEnd();
 
-// helpers
+/**
+ * Normalizes a search string by trimming and lowercasing it.
+ * @param {*} s - The input string to normalize.
+ * @returns {string} The normalized string.
+ */
 const norm = (s) => (s || "").toString().trim().toLowerCase();
+
+/**
+ * Converts a value to lowercase.
+ * @param {*} v - The value to convert.
+ * @returns {string} The lowercase string or an empty string.
+ */
 const lower = (v) => (typeof v === "string" ? v.toLowerCase() : "");
+
+/**
+ * Converts a value to an array.
+ * @param {*} v - The value to convert.
+ * @returns {Array} The array representation of the value.
+ */
 const asArray = (v) => {
   if (Array.isArray(v)) {
     return v;
@@ -20,6 +39,12 @@ const asArray = (v) => {
   }
 };
 
+/**
+ * Searches for users based on a search term.
+ * @param {string} term - The search term.
+ * @param {number} max - The maximum number of results to return.
+ * @returns {Promise<Array>} A promise that resolves to an array of user objects.
+ */
 export async function searchUsers(term, max = 8) {
   const needle = norm(term).replace(/^@/, "");
   if (!needle) return [];
@@ -40,6 +65,12 @@ export async function searchUsers(term, max = 8) {
   return filtered.slice(0, max);
 }
 
+/**
+ * Searches for groups based on a search term.
+ * @param {string} term - The search term.
+ * @param {number} max - The maximum number of results to return.
+ * @returns {Promise<Array>} A promise that resolves to an array of group objects.
+ */
 export async function searchGroups(term, max = 8) {
   const needle = norm(term).replace(/^@/, "");
   if (!needle) return [];
@@ -59,6 +90,12 @@ export async function searchGroups(term, max = 8) {
   }
 }
 
+/**
+ * Searches for posts based on a search term.
+ * @param {string} term - The search term.
+ * @param {number} maxPerBucket - The maximum number of results to return per bucket.
+ * @returns {Promise<Object>} A promise that resolves to an object containing arrays of post objects.
+ */
 export async function searchPosts(term, maxPerBucket = 6) {
   const needle = norm(term);
   const tagNeedle = needle.replace(/^#/, "");
@@ -104,6 +141,11 @@ export async function searchPosts(term, maxPerBucket = 6) {
   };
 }
 
+/**
+ * Searches for all types of content (users, groups, posts) based on a search term.
+ * @param {string} term - The search term.
+ * @returns {Promise<Object>} A promise that resolves to an object containing arrays of user, group, and post objects.
+ */
 export async function searchAll(term) {
   group(`searchAll "${term}"`);
   const [users, groups, posts] = await Promise.all([
