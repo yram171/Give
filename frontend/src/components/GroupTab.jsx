@@ -87,9 +87,9 @@ export default function GroupTab({ id }) {
               className="w-full h-full object-cover"
             />
           </div>
-          <div>
+          <div className="flex flex-col items-start">
             <p className="font-semibold text-base text-black">{group ? group.name : `Group ${id}`}</p>
-            <p className="text-xs text-black-600">{memberNames.length} members</p>
+            <span className="text-xs text-black-600 mt-1">{memberNames.filter(Boolean).length} members</span>
           </div>
         </div>
 
