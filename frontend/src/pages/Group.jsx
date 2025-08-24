@@ -60,7 +60,7 @@ export default function Group() {
           }}
           extra={
             <div className="flex-1 overflow-y-hidden">
-              <GroupTab id="1" accessible={accessible} />
+              <GroupTab id={id} accessible={accessible} />
             </div>
           }
         />
