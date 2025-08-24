@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { ReactComponent as NotificationIcon } from "../assets/notification.svg";
 import { ReactComponent as SettingsIcon } from "../assets/settings.svg";
@@ -46,6 +47,7 @@ function NavBar() {
           ...res.groups.map((g) => ({
             label: `Group: ${g.name || g.displayName || ""}`.trim(),
             type: "group",
+            groupId: g.id || g.groupId || "",
           })),
           // Tags
           ...res.posts.byTag.flatMap((p) => {
@@ -130,16 +132,24 @@ function NavBar() {
                   style={{ top: "2.7rem", borderColor: "#cacaca" }}
                   className="absolute left-0 right-0 text-base mt-1 bg-backgroundGrey border rounded-[1rem] shadow-md max-h-60 overflow-y-auto z-50"
                 >
-                  {filteredSuggestions.map((s, i) => (
-                    <li
-                      key={i}
-                      className="px-3 py-2 text-left group hover:bg-gray-100 cursor-pointer"
-                    >
-                      <span className="text-base text-gray-600 group-hover:text-black">
-                        {s.label}
-                      </span>
-                    </li>
-                  ))}
+                  {filteredSuggestions.map((s, i) => {
+                    if (s.type === "group" && s.groupId) {
+                      return (
+                        <li key={i} className="px-3 py-2 text-left group hover:bg-gray-100 cursor-pointer">
+                          <Link to={`/group/${s.groupId}`} className="text-base text-gray-600 group-hover:text-black w-full block">
+                            {s.label}
+                          </Link>
+                        </li>
+                      );
+                    }
+                    return (
+                      <li key={i} className="px-3 py-2 text-left group hover:bg-gray-100 cursor-pointer">
+                        <span className="text-base text-gray-600 group-hover:text-black">
+                          {s.label}
+                        </span>
+                      </li>
+                    );
+                  })}
                 </ul>
               )}
               <button

@@ -4,12 +4,12 @@ import LeftSidebar from "../components/LeftSideBar";
 import PostsList from "../components/PostsList";
 import { GroupTab, GroupSearch, CreatePost } from "../";
 import { useAuth } from "../contexts/AuthContext";
-import { Navigate } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import { usePosts } from "../hooks/UsePosts";
 import { groupTabConfig } from "../config/tabConfig";
 
 export default function Group() {
-  const id = new URLSearchParams(window.location.search).get("id");
+  const { groupId: id } = useParams();
   const { user, loading: authLoading } = useAuth();
   const { posts, loading: postsLoading } = usePosts();
 

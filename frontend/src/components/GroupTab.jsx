@@ -24,9 +24,10 @@ export default function GroupTab({ id }) {
   useEffect(() => {
     async function fetchGroupAndMembersAndTags() {
       // Fetch group document
-      const groupRef = doc(db, "groups", id);
-      const groupSnap = await getDoc(groupRef);
-      if (groupSnap.exists()) {
+  if (!id) return;
+  const groupRef = doc(db, "groups", id);
+  const groupSnap = await getDoc(groupRef);
+  if (groupSnap.exists()) {
         const groupData = groupSnap.data();
         setGroup(groupData);
         // Fetch user displayNames for each user ID in groupData.users

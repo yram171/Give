@@ -83,6 +83,10 @@ function App() {
         path: "/group",
         element: <RequireAuth><Group postData={postData} /></RequireAuth>,
       },
+      {
+        path: "/group/:groupId",
+        element: <RequireAuth><Group postData={postData} /></RequireAuth>,
+      },
     ],
     },
   ]);
