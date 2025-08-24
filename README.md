@@ -29,10 +29,33 @@ The following should be installed:
   npm install
   npm install react-slick slick-carousel
   ```
+
+***Set up environment variables***
+```
+go to the frontend folder
+add a file called .env
+add the required firebase configurations to it
+
+go to the backend folder 
+add a file called .env
+add the port and firebase service account key
+```
+
+***Connect to firebase***[wiki](../../wiki)
+``` 
+To access the database, see further instructions on the wiki.
+```
   
 **Run the app locally**
   ```
+  cd frontend
   npm start
+
+  and 
+
+  cd backend 
+  node index.js
+
   ```
 
 The app should now be running at:

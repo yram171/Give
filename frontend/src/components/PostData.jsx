@@ -58,7 +58,7 @@ const PostData = ({ post, refreshPosts }) => {
         </Slider>
       )}
 
-      {/* ✅ Poll rendering */}
+      {/* Poll rendering */}
       {polls.length > 0 && (
         <PollBox
           postId={post.id}

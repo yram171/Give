@@ -10,11 +10,9 @@ const Post = ({user, group, post}) => {
     <div className="w-full rounded-3xl p-4 bg-backgroundGrey flex flex-col items-center">
       <UserCard user={user} group={group} />
       <PostData post={post} />
-      {/* <PollBox initialOptions={pollOptions} /> */}
     </div>
   )
 }
-
 
 Post.propTypes = {
   user: PropTypes.shape({
@@ -28,7 +26,6 @@ Post.propTypes = {
     question: PropTypes.string,
     content: PropTypes.array,
   }).isRequired,
-  // pollOptions: PropTypes.array.isRequired,
 };
 
 export default Post;

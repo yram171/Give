@@ -5,7 +5,18 @@ import { uploadManyAndGetUrls } from "../lib/StorageUpload";
 import { useAuth } from "../contexts/AuthContext";
 import PostData from "./PostData";
 
-// Create a post via backend
+/**
+ * Creates a new post via the backend API.
+ *
+ * @param {Object} params - Parameters for creating the post.
+ * @param {Object} params.currentUser - The current user object (must have uid, displayName, photoURL).
+ * @param {string} params.content - The text content of the post.
+ * @param {string[]} [params.mediaUrls=[]] - Array of image/media URLs to attach to the post.
+ * @param {string[]} [params.tags=[]] - Array of tags for the post.
+ * @param {Array} [params.polls=[]] - Array of poll option objects for the post.
+ * @returns {Promise<Object>} Resolves to the created post object.
+ * @throws {Error} If the request fails or the server returns an error.
+ */
 export async function createPostViaApi({
   currentUser,
   content,
@@ -33,7 +44,16 @@ export async function createPostViaApi({
   return res.json();
 }
 
-// Get posts via backend
+/**
+ * Fetches posts from the backend API with optional query parameters.
+ *
+ * @param {Object} [options] - Options for fetching posts.
+ * @param {number} [options.limitCount=10] - Maximum number of posts to fetch.
+ * @param {string} [options.orderByField="createdAt"] - Field to order posts by.
+ * @param {string} [options.orderDirection="desc"] - Order direction ("asc" or "desc").
+ * @returns {Promise<Array>} Resolves to an array of post objects.
+ * @throws {Error} If the fetch fails or the server returns an error.
+ */
 export async function getPostsViaApi({
   limitCount = 10,
   orderByField = "createdAt",
@@ -49,7 +69,17 @@ export async function getPostsViaApi({
   return res.json();
 }
 
-export default function ResponsiveContainer() {
+/**
+ * Renders the Create Post form UI and handles post creation logic.
+ *
+ * Allows users to compose a post with text, tags, images, and optional poll options.
+ * Handles image uploads, poll option management, and form submission.
+ * Fetches and displays the latest posts after a successful submission.
+ *
+ * @component
+ * @returns {JSX.Element} The rendered Create Post form.
+ */
+export default function CreatePost() {
   const { user: currentUser } = useAuth();
 
   const [text, setText] = useState("");
@@ -67,10 +97,12 @@ export default function ResponsiveContainer() {
   {
     /* Image Uploading functions */
   }
+  // Open file picker dialog
   function openFilePicker() {
     fileInputRef.current?.click();
   }
 
+  // Handle file selection
   function onPickFiles(e) {
     const picked = Array.from(e.target.files || []);
     setFiles((prev) => [...prev, ...picked]);
@@ -78,6 +110,7 @@ export default function ResponsiveContainer() {
     setPreviews((prev) => [...prev, ...newPreviews]);
   }
 
+  // Remove a file preview
   function removePreview(idx) {
     URL.revokeObjectURL(previews[idx]);
     setPreviews((prev) => prev.filter((_, i) => i !== idx));
@@ -93,12 +126,14 @@ export default function ResponsiveContainer() {
     );
   }
 
+  // Handle poll option text change
   function handleOptionChange(index, value) {
     setPollOptions((opts) =>
       opts.map((o, i) => (i === index ? { ...o, label: value } : o))
     );
   }
 
+  // Remove a poll option
   function handleRemoveOption(index) {
     setPollOptions((opts) => opts.filter((_, i) => i !== index));
   }
@@ -108,6 +143,7 @@ export default function ResponsiveContainer() {
     return () => previews.forEach(URL.revokeObjectURL);
   }, [previews]);
 
+  // Refresh posts after submission
   async function refreshPosts() {
     try {
       setLoading(true);
@@ -126,10 +162,20 @@ export default function ResponsiveContainer() {
     }
   }
 
+  // Fetch posts on component mount
   useEffect(() => {
     refreshPosts();
   }, []);
 
+  /**
+ * Handles the form submission for creating a new post.
+ *
+ * Validates input, uploads images, formats poll options, and sends the post data to the backend.
+ * Resets form state and refreshes the post list on success. Displays errors on failure.
+ *
+ * @param {React.FormEvent<HTMLFormElement>} e - The form submission event.
+ * @returns {Promise<void>}
+ */
   async function handleSubmit(e) {
     e.preventDefault();
     setError("");
@@ -142,6 +188,7 @@ export default function ResponsiveContainer() {
 
       const { urls } = await uploadManyAndGetUrls(files, currentUser.uid);
 
+      // Clean and limit poll options
       const cleanPolls = pollOptions
         .map((o) => ({ label: o.label.trim(), votes: 0 }))
         .filter((o) => o.label.length > 0)

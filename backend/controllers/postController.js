@@ -1,5 +1,17 @@
 const { db, admin } = require("../firebase/firebase");
 
+/**
+ * Create a new post and save it to Firestore.
+ *
+ * @param {import("express").Request} req - The request object containing post data.
+ * @param {import("express").Response} res - The response object to send results.
+ * @returns {Promise<void>} Sends a JSON response with the new post or error.
+ *
+ * @example
+ * // POST /posts
+ * // req.body = { content: "Hello world", authorId: "123" }
+ * // Response: { id: "abc123", content: "Hello world", authorId: "123", ... }
+ */
 exports.createPost = async (req, res) => {
   try {
     const {
@@ -15,6 +27,7 @@ exports.createPost = async (req, res) => {
     if (!content || !content.trim())
       return res.status(400).json({ error: "Content is required" });
 
+    // Create the post object
     const post = {
       authorId,
       authorDisplayName,
@@ -28,13 +41,15 @@ exports.createPost = async (req, res) => {
             .map((p) => ({ label: String(p.label || "").trim(), votes: 0 }))
             .filter((p) => p.label)
         : [],
-      voters: [], // Initialize empty voters array
+      voters: [], 
       createdAt: admin.firestore.FieldValue.serverTimestamp(),
       updatedAt: admin.firestore.FieldValue.serverTimestamp(),
     };
 
+    // Add the post to Firestore
     const ref = await db.collection("posts").add(post);
     const snap = await ref.get();
+
     res.status(201).json({ id: ref.id, ...snap.data() });
   } catch (e) {
     console.error(e);
@@ -42,6 +57,20 @@ exports.createPost = async (req, res) => {
   }
 };
 
+/**
+ * Get a list of posts from Firestore, ordered by creation date (newest first).
+ *
+ * @param {import("express").Request} req - The request object (query may include `limitCount`).
+ * @param {import("express").Response} res - The response object used to send JSON.
+ * @returns {Promise<void>} Sends an array of post objects in JSON format or an error.
+ *
+ * @example
+ * // GET /posts?limitCount=5
+ * // Response: [
+ * //   { id: "abc123", content: "Hello world", authorId: "123", ... },
+ * //   { id: "def456", content: "Another post", authorId: "456", ... }
+ * // ]
+ */
 exports.getPosts = async (req, res) => {
   try {
     const limitCount = Number(req.query.limitCount ?? 10);
@@ -81,7 +110,7 @@ exports.votePoll = async (req, res) => {
     if (!Array.isArray(postData.polls) || !postData.polls[optionIndex])
       return res.status(400).json({ error: "Invalid poll option" });
 
-    // Instead of using FieldValue.increment, let's update the entire polls array
+    
     const updatedPolls = [...postData.polls];
     updatedPolls[optionIndex] = {
       ...updatedPolls[optionIndex],
