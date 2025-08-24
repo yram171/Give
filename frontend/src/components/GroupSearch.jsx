@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { collection, getDocs, getFirestore, query, where } from "firebase/firestore";
 import { useAuth } from "../contexts/AuthContext";
 import clsx from "clsx";
@@ -71,12 +72,12 @@ export default function GroupSearch() {
             className="w-full h-full object-cover"
           />
         </div>
-        <a
-          href={`/group?id=${id}`}
+        <Link
+          to={`/group/${id}`}
           className="font-semibold text-base text-black group-hover:text-black/40"
         >
           {name}
-        </a>
+        </Link>
       </li>
     );
   }
