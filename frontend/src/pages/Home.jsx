@@ -4,17 +4,15 @@
 import React, { useState } from "react";
 import AppLayout from "../layouts/AppLayout";
 import LeftSidebar from "../components/LeftSideBar";
-import PostsList from "../components/PostsList";
+import PostsContainer from "../components/PostsContainer";
 import { SuggestedBox, GroupSearch, CreatePost } from "../";
-import { PostsProvider, usePosts } from "../contexts/PostsContext";
 import { homeTabConfig } from "../config/tabConfig";
 
 /**
- * Home screen content component (wrapped by PostsProvider)
+ * Home page component.
  * @returns {JSX.Element}
  */
-function HomeContent() {
-  const { posts, loading } = usePosts();
+export default function HomeScreen() {
   const [currentTab, setCurrentTab] = useState("home");
 
   const showCreate = currentTab === "create";
@@ -32,21 +30,9 @@ function HomeContent() {
         />
       }
       center={
-        showCreate ? <CreatePost /> : loading ? null : <PostsList posts={posts} />
+        showCreate ? <CreatePost /> : <PostsContainer />
       }
       right={<GroupSearch />}
     />
-  );
-}
-
-/**
- * Home page component with Posts provider.
- * @returns {JSX.Element}
- */
-export default function HomeScreen() {
-  return (
-    <PostsProvider>
-      <HomeContent />
-    </PostsProvider>
   );
 }

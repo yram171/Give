@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { usePosts } from "../contexts/PostsContext";
+import { usePostsRefresh } from "./PostsContainer";
 
 /**
  * PollBox Component
@@ -11,8 +11,8 @@ import { usePosts } from "../contexts/PostsContext";
  * @param {Array} initialOptions - Array of poll options with labels and vote counts
  */
 export default function PollBox({ postId, initialOptions }) {
-  // Access the Posts Context for refresh functionality
-  const { refreshPosts, updatePost } = usePosts();
+  // Access the Posts refresh functionality
+  const { refreshPosts } = usePostsRefresh();
   
   // State to track if the current user has voted on this poll
   const [hasVoted, setHasVoted] = useState(false);
