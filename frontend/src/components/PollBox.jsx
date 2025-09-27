@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { usePosts } from "../contexts/PostsContext";
 
 /**
  * PollBox Component
@@ -8,9 +9,11 @@ import { useState, useEffect } from "react";
  *
  * @param {string} postId - Unique identifier for the post containing this poll
  * @param {Array} initialOptions - Array of poll options with labels and vote counts
- * @param {Function} refreshPosts - Callback function to refresh post data after voting
  */
-export default function PollBox({ postId, initialOptions, refreshPosts }) {
+export default function PollBox({ postId, initialOptions }) {
+  // Access the Posts Context for refresh functionality
+  const { refreshPosts, updatePost } = usePosts();
+  
   // State to track if the current user has voted on this poll
   const [hasVoted, setHasVoted] = useState(false);
 
@@ -78,15 +81,21 @@ export default function PollBox({ postId, initialOptions, refreshPosts }) {
         throw new Error(data.error || "Failed to vote");
       }
 
-      console.log("Vote successful, refreshing posts...");
+      console.log("Vote successful, updating UI...");
 
-      // Refresh post data to get updated vote counts
-      if (refreshPosts) {
-        await refreshPosts();
-      }
+      // Update local state immediately for better UX
+      const updatedOptions = [...currentOptions];
+      updatedOptions[optionIndex] = {
+        ...updatedOptions[optionIndex],
+        votes: (updatedOptions[optionIndex].votes || 0) + 1,
+      };
+      setCurrentOptions(updatedOptions);
 
       // Update UI to show results instead of voting options
       setHasVoted(true);
+
+      // Refresh post data to sync with backend
+      await refreshPosts();
     } catch (err) {
       console.error("Vote failed:", err);
       // Note: Error handling could be improved with user feedback

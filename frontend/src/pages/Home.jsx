@@ -6,17 +6,14 @@ import AppLayout from "../layouts/AppLayout";
 import LeftSidebar from "../components/LeftSideBar";
 import PostsList from "../components/PostsList";
 import { SuggestedBox, GroupSearch, CreatePost } from "../";
-import { useAuth } from "../contexts/AuthContext";
-import { Navigate } from "react-router-dom";
-import { usePosts } from "../hooks/UsePosts";
+import { PostsProvider, usePosts } from "../contexts/PostsContext";
 import { homeTabConfig } from "../config/tabConfig";
 
 /**
- * Home page component.
+ * Home screen content component (wrapped by PostsProvider)
  * @returns {JSX.Element}
  */
-export default function HomeScreen() {
-  const { user } = useAuth();
+function HomeContent() {
   const { posts, loading } = usePosts();
   const [currentTab, setCurrentTab] = useState("home");
 
@@ -39,5 +36,17 @@ export default function HomeScreen() {
       }
       right={<GroupSearch />}
     />
+  );
+}
+
+/**
+ * Home page component with Posts provider.
+ * @returns {JSX.Element}
+ */
+export default function HomeScreen() {
+  return (
+    <PostsProvider>
+      <HomeContent />
+    </PostsProvider>
   );
 }
