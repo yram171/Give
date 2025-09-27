@@ -81,9 +81,14 @@ export default function PollBox({ postId, initialOptions }) {
         throw new Error(data.error || "Failed to vote");
       }
 
-      console.log("Vote successful, updating UI...");
+      console.log("Vote successful, refreshing posts...");
 
-      // Update local state immediately for better UX
+      // Refresh post data to sync with backend first
+      await refreshPosts();
+
+      console.log("Posts refreshed, updating UI to show results...");
+
+      // Only after successful refresh, update local state and show results
       const updatedOptions = [...currentOptions];
       updatedOptions[optionIndex] = {
         ...updatedOptions[optionIndex],
@@ -93,9 +98,6 @@ export default function PollBox({ postId, initialOptions }) {
 
       // Update UI to show results instead of voting options
       setHasVoted(true);
-
-      // Refresh post data to sync with backend
-      await refreshPosts();
     } catch (err) {
       console.error("Vote failed:", err);
       // Note: Error handling could be improved with user feedback
