@@ -15,6 +15,19 @@ export function usePosts() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const fetchPosts = async () => {
+    try {
+      const data = await getPostData();
+      setPosts(data);
+    } catch (error) {
+      console.error("Failed to fetch posts:", error);
+    }
+  };
+
+  const refreshPosts = async () => {
+    await fetchPosts();
+  };
+
   useEffect(() => {
     let alive = true;
     (async () => {
@@ -28,5 +41,5 @@ export function usePosts() {
     return () => { alive = false; };
   }, []);
 
-  return { posts, loading };
+  return { posts, loading, refreshPosts };
 }
