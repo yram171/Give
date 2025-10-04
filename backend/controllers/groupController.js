@@ -18,6 +18,8 @@ exports.createGroup = async (req, res) => {
         const {
             content,
             authorId,
+            description,
+            privacy,
         } = req.body;
 
         if (!content || !content.trim())
@@ -26,7 +28,9 @@ exports.createGroup = async (req, res) => {
         // Create the post object
         const group = {
             name: content.trim(),
-            members: [authorId]
+            members: [authorId],
+            description,
+            privacy
         };
 
         // Add the post to Firestore

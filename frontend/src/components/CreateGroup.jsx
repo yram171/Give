@@ -13,12 +13,16 @@ import { useAuth } from "../contexts/AuthContext";
  */
 export async function createGroupViaApi({
     currentUser,
-    content
+    content,
+    description,
+    privacy,
 }) {
     // Construct request body with user info and post data
     const body = {
         content,
-        authorId: currentUser?.uid ?? null
+        description,
+        authorId: currentUser?.uid ?? null,
+        privacy: privacy ?? false,
     };
 
     // Send POST request to create new post
@@ -47,6 +51,8 @@ export default function CreateGroup() {
 
     // State for form inputs and UI control
     const [text, setText] = useState(""); // Post text content
+    const [desc, setDesc] = useState("");
+    const [privacySetting, setPrivacy] = useState("");
     const [submitting, setSubmitting] = useState(false); // Form submission loading state
     const [error, setError] = useState(""); // Error message display
     const [loading, setLoading] = useState(true); // Posts loading state
@@ -69,13 +75,19 @@ export default function CreateGroup() {
         if (!text.trim()) return setError("Please enter some text.");
         if (!currentUser) return setError("Please log in before posting.");
 
+        var privacy = false;
+
         try {
             setSubmitting(true);
-
+            if (privacySetting === "Private") {
+                privacy = true;
+            }
             // Create the post via API
             await createGroupViaApi({
                 currentUser,
                 content: text.trim(),
+                description: desc.trim(),
+                privacy,
             });
 
             // Reset form state after successful submission
@@ -117,13 +129,47 @@ export default function CreateGroup() {
                                     onChange={(e) => setText(e.target.value)}
                                     placeholder={"Enter group name: "}
                                     disabled={submitting} // Disable during submission
-                                    rows={3}
+                                    rows={1}
                                     className="text-sm w-full text-gray-900 focus:outline-none bg-darkGrey disabled:opacity-60"
                                 />
 
                             </div>
                         </div>
 
+                        {/* Text content section header */}
+                        <h3 className="text-lg font-semibold mb-2 text-black text-left">
+                            Group Description
+                        </h3>
+
+                        {/* Main form element with submission handler */}
+                            {/* Text and tags input container */}
+                            <div className="mb-2">
+                                <div className="block w-full p-4 rounded-lg bg-darkGrey">
+                                    {/* Main text area for post content */}
+                                    <textarea
+                                        id="medium-input"
+                                        value={desc}
+                                        onChange={(e) => setDesc(e.target.value)}
+                                        placeholder={"Enter group description: "}
+                                        disabled={submitting} // Disable during submission
+                                        rows={3}
+                                        className="text-sm w-full text-gray-900 focus:outline-none bg-darkGrey disabled:opacity-60"
+                                    />
+
+                                </div>
+                            </div>
+
+                        <div className="flex items-center space-x-2 mb-4">
+                            <h3 className="text-lg font-semibold text-black">Group privacy:</h3>
+                            {/* Group privacy settings - ceither public or private(invite/request only) */}
+                            <select name="privacy" id="privacy"
+                                onChange={(e) => setPrivacy(e.target.value)}
+                                disabled={submitting}
+                                required >
+                                <option value="Public">Public</option>
+                                <option value="Private">Private</option>
+                            </select>
+                        </div>
 
                         {/* Error message display - shown when form validation fails */}
                         {error && <p className="text-red-600 mt-4">{error}</p>}
