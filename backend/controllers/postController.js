@@ -73,12 +73,20 @@ exports.createPost = async (req, res) => {
  */
 exports.getPosts = async (req, res) => {
   try {
-    const limitCount = Number(req.query.limitCount ?? 10);
-    const snap = await db
-      .collection("posts")
-      .orderBy("createdAt", "desc")
-      .limit(limitCount)
-      .get();
+      const limitCount = Number(req.query.limitCount ?? 10);
+      const groupId = String(req.query.groupId ?? "default");
+      var snap = await db
+          .collection("posts")
+          .orderBy("createdAt", "desc")
+          .limit(limitCount)
+          .get();
+      if (groupId !== "default") {
+        snap = await db
+              .collection("posts")
+              .where("group","==",groupId)
+              .limit(limitCount)
+              .get();
+      }
     res.json(snap.docs.map((d) => ({ id: d.id, ...d.data() })));
   } catch (e) {
     console.error(e);

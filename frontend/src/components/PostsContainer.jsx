@@ -24,8 +24,13 @@ export const usePostsRefresh = () => {
  * to child components without prop drilling. Only wraps the posts-related
  * components, not the entire app.
  */
-export default function PostsContainer() {
-  const { posts, loading, refreshPosts } = usePosts();
+export default function PostsContainer(groupId = "default") {
+    var gId = "default";
+    if (groupId !== (undefined || "default")) {
+        const { groupId: id } = groupId;
+        gId = id;
+    }
+    const { posts, loading, refreshPosts } = usePosts(gId);
 
   if (loading) return null;
 
