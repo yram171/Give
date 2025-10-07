@@ -146,7 +146,7 @@ export default function GroupSearch(groupId = "default") {
         </div>
 
         {/* List of Groups */}
-        <div className={`flex w-full flex-col gap-2 ${expanded ? "overflow-y-auto" : ""} with-scrollbar items-start`}>
+        <div className={`flex w-full flex-col gap-2 ${expanded ? "overflow-y-scroll" : ""} scrollbar-hide items-start`}>
           <ul className='flex w-full flex-col gap-2 grow'>
             {loadingGroups ? (
               <li className="text-gray-500 text-sm">Loading groups...</li>

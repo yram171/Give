@@ -21,7 +21,8 @@ exports.createPost = async (req, res) => {
       authorId,
       authorDisplayName,
       authorPhotoURL,
-      polls = [],
+        polls = [],
+      group,
     } = req.body;
 
     if (!content || !content.trim())
@@ -41,6 +42,7 @@ exports.createPost = async (req, res) => {
             .map((p) => ({ label: String(p.label || "").trim(), votes: 0 }))
             .filter((p) => p.label)
         : [],
+        group,
       voters: [],
       createdAt: admin.firestore.FieldValue.serverTimestamp(),
       updatedAt: admin.firestore.FieldValue.serverTimestamp(),
