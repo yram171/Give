@@ -22,7 +22,7 @@ import { db } from "../firebase";
 export default function Group() {
   const { groupId: id } = useParams();
   const { user, loading: authLoading } = useAuth();
-  const { posts, loading: postsLoading } = usePosts();
+  const { posts, loading: postsLoading } = usePosts(id);
 
   const [accessible, setAccessible] = useState(false);
   const [loadingGroup, setLoadingGroup] = useState(true);
@@ -87,9 +87,9 @@ export default function Group() {
         />
       }
       center={
-          accessible ? <PostsContainer /> : <JoinGroup id={id} />
+          accessible ? <PostsContainer groupId={id} /> : <JoinGroup id={id} />
       }
-      right={<GroupSearch />}
+          right={<GroupSearch groupId={id} />}
     />
   );
 }
