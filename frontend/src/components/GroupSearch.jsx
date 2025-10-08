@@ -20,7 +20,7 @@ export default function GroupSearch(groupId = "default") {
     const { user } = useAuth();
 
     var gId = "default";
-    if (groupId !== (undefined || "default")) {
+    if (groupId !== "default") {
         const { groupId: id } = groupId;
         gId = id;
     }

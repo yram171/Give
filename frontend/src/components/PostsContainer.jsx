@@ -26,7 +26,7 @@ export const usePostsRefresh = () => {
  */
 export default function PostsContainer(groupId = "default") {
     var gId = "default";
-    if (groupId !== (undefined || "default")) {
+    if (groupId !== "default") {
         const { groupId: id } = groupId;
         gId = id;
     }
