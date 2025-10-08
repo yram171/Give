@@ -28,7 +28,7 @@ export default function GroupSearch() {
         // Query groups where 'users' array contains the current user's UID
         const q = query(
           collection(db, "groups"),
-          where("users", "array-contains", user.uid)
+          where("members", "array-contains", user.uid)
         );
         const groupSnap = await getDocs(q);
         const userGroups = groupSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
