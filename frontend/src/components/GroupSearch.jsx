@@ -77,7 +77,6 @@ export default function GroupSearch(groupId = "default") {
             group.active = true;
         }
       const { id, name, profilePic, active } = group;
-      console.log(active);
     return (
         <li className={clsx("flex w-full items-center rounded-xl gap-4 p-2 cursor-pointer group",
             (active ? "bg-defaultYellow" : "bg-backgroundGrey hover:bg-lightYellow"))}>

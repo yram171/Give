@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { usePostsRefresh } from "./PostsContainer";
+import { useAuth } from "../contexts/AuthContext";
+import { collection, getDocs, getDoc, doc, getFirestore, query, where } from "firebase/firestore";
 
 /**
  * PollBox Component
@@ -21,7 +23,32 @@ export default function PollBox({ postId, initialOptions }) {
   const [voting, setVoting] = useState(false);
 
   // Local copy of poll options that updates when initialOptions change
-  const [currentOptions, setCurrentOptions] = useState(initialOptions);
+    const [currentOptions, setCurrentOptions] = useState(initialOptions);
+
+    // get currently logged in user
+    const { user: currentUser } = useAuth();
+
+    // checks if user has already voted on a particular poll or was creator of poll
+    // and if true does not let them vote
+    useEffect(() => {
+        const checkHasVoted = async () => {
+            if (currentUser) {
+                const db = getFirestore();
+                const docRef = doc(db, "posts", postId);
+                const docSnap = await getDoc(docRef);
+
+                if (docSnap.exists()) {
+                    const votersArray = docSnap.data().voters;
+                    if (votersArray.includes(currentUser.uid) || docSnap.data().authorId === currentUser.uid) {
+                        setHasVoted(true);
+                    } else {
+                        setHasVoted(false);
+                    }
+                }
+            }
+        };
+        checkHasVoted();
+    });
 
   /**
    * Effect to update local options when parent component refreshes data
@@ -68,8 +95,8 @@ export default function PollBox({ postId, initialOptions }) {
       // Send vote request to backend API
       const res = await fetch(`/api/posts/${postId}/vote`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ optionIndex }),
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ optionIndex, authorId:currentUser?.uid ?? null }),
       });
 
       console.log("Vote response status:", res.status);
