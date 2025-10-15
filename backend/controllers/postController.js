@@ -114,7 +114,7 @@ exports.votePoll = async (req, res) => {
   try {
     // Extract postId from URL parameters and optionIndex from request body
     const { postId } = req.params;
-    const { optionIndex } = req.body;
+      const { optionIndex, authorId } = req.body;
 
     // Log incoming vote request for debugging
     console.log("Vote request received:", { postId, optionIndex });
@@ -159,8 +159,10 @@ exports.votePoll = async (req, res) => {
 
     // Update the post document in Firestore with new poll data
     await postRef.update({
-      polls: updatedPolls,
+        polls: updatedPolls,
+        voters: admin.firestore.FieldValue.arrayUnion(authorId),
       updatedAt: admin.firestore.FieldValue.serverTimestamp(), // Track when the vote was made
+
     });
 
     console.log("Vote update successful");
