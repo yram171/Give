@@ -175,7 +175,7 @@ export default function PollBox({ postId, initialOptions }) {
 
       {/* Loading indicator during vote submission */}
       {voting && (
-        <div className="text-xs text-blue-500">Submitting vote...</div>
+        <div className="text-xs text-pink-500">Submitting vote...</div>
       )}
     </div>
   );

@@ -32,7 +32,12 @@ export default function PostsContainer(groupId = "default") {
     }
     const { posts, loading, refreshPosts } = usePosts(gId);
 
-  if (loading) return null;
+    if (loading) return (
+        <div className="w-full mx-auto">
+            <div className="bg-backgroundGrey p-4 rounded-3xl shadow-md">
+                <p className="text-gray-500 text-sm">Loading posts...</p>
+            </div>
+        </div>);
 
   return (
     <PostsRefreshContext.Provider value={{ refreshPosts }}>
