@@ -23,11 +23,15 @@ exports.createPost = async (req, res) => {
       authorDisplayName,
       authorPhotoURL,
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         polls = [],
       group,
       expiryOption = "none", // "none" | "10s" | "1d" | "7d" | "30d"
 
 
+=======
+      polls = [],
+>>>>>>> Stashed changes
 =======
       polls = [],
 >>>>>>> Stashed changes
@@ -108,6 +112,7 @@ exports.createPost = async (req, res) => {
 exports.getPosts = async (req, res) => {
   try {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
       const limitCount = Number(req.query.limitCount ?? 10);
       const groupId = String(req.query.groupId ?? "default");
       const excludeExpired = String(req.query.excludeExpired ?? "true") === "true";
@@ -132,6 +137,8 @@ exports.getPosts = async (req, res) => {
 
 
 =======
+=======
+>>>>>>> Stashed changes
     const limitCount = Number(req.query.limitCount ?? 10);
     const snap = await db
       .collection("posts")
@@ -166,7 +173,10 @@ exports.votePoll = async (req, res) => {
     // Extract postId from URL parameters and optionIndex from request body
     const { postId } = req.params;
     const { optionIndex } = req.body;
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 
     // Log incoming vote request for debugging
     console.log("Vote request received:", { postId, optionIndex });
@@ -228,8 +238,11 @@ exports.votePoll = async (req, res) => {
       polls: updatedPolls,
       updatedAt: admin.firestore.FieldValue.serverTimestamp(), // Track when the vote was made
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
 
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
     });
