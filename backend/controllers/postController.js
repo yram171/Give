@@ -22,11 +22,15 @@ exports.createPost = async (req, res) => {
       authorId,
       authorDisplayName,
       authorPhotoURL,
+<<<<<<< Updated upstream
         polls = [],
       group,
       expiryOption = "none", // "none" | "10s" | "1d" | "7d" | "30d"
 
 
+=======
+      polls = [],
+>>>>>>> Stashed changes
     } = req.body;
 
 
@@ -66,7 +70,6 @@ exports.createPost = async (req, res) => {
             .map((p) => ({ label: String(p.label || "").trim(), votes: 0 }))
             .filter((p) => p.label)
         : [],
-        group,
       voters: [],
       expiryOption,
       expiresAt, // used for countdown, filtering, and optional TTL deletion
@@ -104,6 +107,7 @@ exports.createPost = async (req, res) => {
  */
 exports.getPosts = async (req, res) => {
   try {
+<<<<<<< Updated upstream
       const limitCount = Number(req.query.limitCount ?? 10);
       const groupId = String(req.query.groupId ?? "default");
       const excludeExpired = String(req.query.excludeExpired ?? "true") === "true";
@@ -127,6 +131,15 @@ exports.getPosts = async (req, res) => {
     res.json(filtered);
 
 
+=======
+    const limitCount = Number(req.query.limitCount ?? 10);
+    const snap = await db
+      .collection("posts")
+      .orderBy("createdAt", "desc")
+      .limit(limitCount)
+      .get();
+    res.json(snap.docs.map((d) => ({ id: d.id, ...d.data() })));
+>>>>>>> Stashed changes
   } catch (e) {
     console.error(e);
     res.status(500).json({ error: "Failed to fetch posts" });
@@ -152,7 +165,7 @@ exports.votePoll = async (req, res) => {
   try {
     // Extract postId from URL parameters and optionIndex from request body
     const { postId } = req.params;
-      const { optionIndex, authorId } = req.body;
+    const { optionIndex } = req.body;
 
 
     // Log incoming vote request for debugging
@@ -212,11 +225,13 @@ exports.votePoll = async (req, res) => {
 
     // Update the post document in Firestore with new poll data
     await postRef.update({
-        polls: updatedPolls,
-        voters: admin.firestore.FieldValue.arrayUnion(authorId),
+      polls: updatedPolls,
       updatedAt: admin.firestore.FieldValue.serverTimestamp(), // Track when the vote was made
+<<<<<<< Updated upstream
 
 
+=======
+>>>>>>> Stashed changes
     });
 
 

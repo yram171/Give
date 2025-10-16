@@ -30,4 +30,3 @@ export { default as CreateAccount } from './pages/CreateAccount';
 export { default as Group } from './pages/Group';
 export {default as CreatePost} from './components/CreatePost';
 export {default as JoinGroup} from './components/JoinGroup';
-export {default as CreateGroup } from './components/CreateGroup';

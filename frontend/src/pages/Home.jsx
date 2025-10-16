@@ -4,8 +4,11 @@
 import React, { useState } from "react";
 import AppLayout from "../layouts/AppLayout";
 import LeftSidebar from "../components/LeftSideBar";
-import PostsContainer from "../components/PostsContainer";
-import { SuggestedBox, GroupSearch, CreatePost, CreateGroup } from "../";
+import PostsList from "../components/PostsList";
+import { SuggestedBox, GroupSearch, CreatePost } from "../";
+import { useAuth } from "../contexts/AuthContext";
+import { Navigate } from "react-router-dom";
+import { usePosts } from "../hooks/UsePosts";
 import { homeTabConfig } from "../config/tabConfig";
 
 /**
@@ -13,11 +16,11 @@ import { homeTabConfig } from "../config/tabConfig";
  * @returns {JSX.Element}
  */
 export default function HomeScreen() {
+  const { user } = useAuth();
+  const { posts, loading } = usePosts();
   const [currentTab, setCurrentTab] = useState("home");
 
-    const showCreate = currentTab === "create";
-
-    const showCreateGroup = currentTab === "createGroup";
+  const showCreate = currentTab === "create";
 
   return (
     <AppLayout
@@ -32,11 +35,9 @@ export default function HomeScreen() {
         />
       }
       center={
-          showCreate ? <CreatePost /> : <PostsContainer />
+        showCreate ? <CreatePost /> : loading ? null : <PostsList posts={posts} />
       }
-      right={
-        showCreateGroup ? <CreateGroup /> : <GroupSearch />
-      }
+      right={<GroupSearch />}
     />
   );
 }

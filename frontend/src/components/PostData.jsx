@@ -31,8 +31,9 @@ const baseSettings = {
  * - Hashtags display
  *
  * @param {Object} post - The post object containing all post data
+ * @param {Function} refreshPosts - Callback function to refresh post data after interactions
  */
-const PostData = ({ post }) => {
+const PostData = ({ post, refreshPosts }) => {
   // Extract and validate question text (fallback to empty string)
   const question = post?.question ?? "";
 
@@ -98,6 +99,7 @@ const PostData = ({ post }) => {
         <PollBox
           postId={post.id} // Unique identifier for voting API calls
           initialOptions={polls} // Poll options and current vote counts
+          refreshPosts={refreshPosts} // Callback to refresh data after voting
           post={post} // Full post object for vote tracking
         />
       )}

@@ -11,19 +11,13 @@ const initialSearch = localStorage.getItem("groupSearch") ?? "";
  *
  * @returns {JSX.Element} The rendered component.
  */
-export default function GroupSearch(groupId = "default") {
+export default function GroupSearch() {
   const [searchQuery, setSearchQuery] = useState(initialSearch);
   const [expanded, setExpanded] = useState(initialExpanded);
   const [groups, setGroups] = useState([]);
   const [loadingGroups, setLoadingGroups] = useState(true);
   const inputRef = useRef(null);
-    const { user } = useAuth();
-
-    var gId = "default";
-    if (groupId !== "default") {
-        const { groupId: id } = groupId;
-        gId = id;
-    }
+  const { user } = useAuth();
 
   // Fetch groups for the current user from Firestore
   useEffect(() => {
@@ -34,7 +28,7 @@ export default function GroupSearch(groupId = "default") {
         // Query groups where 'users' array contains the current user's UID
         const q = query(
           collection(db, "groups"),
-          where("members", "array-contains", user.uid)
+          where("users", "array-contains", user.uid)
         );
         const groupSnap = await getDocs(q);
         const userGroups = groupSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
@@ -71,24 +65,20 @@ export default function GroupSearch(groupId = "default") {
   };
 
   // Renders a single group item in the list
-    function GroupItem({ group }) {
-        group["active"] = false;
-        if (group.id === gId) {
-            group.active = true;
-        }
-      const { id, name, profilePic, active } = group;
+  function GroupItem({ group }) {
+    const { id, name, profilePic } = group;
     return (
-        <li className={clsx("flex w-full items-center rounded-xl gap-4 p-2 cursor-pointer group",
-            (active ? "bg-defaultYellow" : "bg-backgroundGrey hover:bg-lightYellow"))}>
+      <li className="flex items-center rounded-xl gap-4 p-2 cursor-pointer group">
         <div className={clsx("w-10 h-10 rounded-full border-2 border-darkGrey overflow-hidden", { "bg-gray-300": !profilePic })}>
           <img
             src={profilePic ? `images/${profilePic}` : "/images/placeholder.svg"}
-                    alt={`${name} profile`}
+            alt={`${name} profile`}
+            className="w-full h-full object-cover"
           />
         </div>
         <a
-          href={`/group/${id}`}
-          className="font-semibold text-base text-black group-hover:text-black"
+          href={`/group?id=${id}`}
+          className="font-semibold text-base text-black group-hover:text-black/40"
         >
           {name}
         </a>
@@ -108,7 +98,7 @@ export default function GroupSearch(groupId = "default") {
 
   return (
     <div className="w-full h-full relative">
-  <div className="w-full bg-backgroundGrey rounded-3xl p-4 shadow-sm flex flex-col gap-4">
+  <div className="bg-backgroundGrey rounded-3xl p-4 shadow-sm flex flex-col gap-4">
         <div>
           <p className="font-semibold text-base text-black text-left">My Groups</p>
         </div>
@@ -145,8 +135,8 @@ export default function GroupSearch(groupId = "default") {
         </div>
 
         {/* List of Groups */}
-        <div className={`flex w-full flex-col gap-2 ${expanded ? "overflow-y-scroll" : ""} scrollbar-hide items-start`}>
-          <ul className='flex w-full flex-col gap-2 grow'>
+        <div className={`flex flex-col gap-2 ${expanded ? "overflow-y-auto" : ""} with-scrollbar items-start`}>
+          <ul className='flex flex-col gap-2 grow'>
             {loadingGroups ? (
               <li className="text-gray-500 text-sm">Loading groups...</li>
             ) : displayedGroups.length === 0 ? (

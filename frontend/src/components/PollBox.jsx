@@ -1,7 +1,4 @@
 import { useState, useEffect } from "react";
-import { usePostsRefresh } from "./PostsContainer";
-import { useAuth } from "../contexts/AuthContext";
-import { collection, getDocs, getDoc, doc, getFirestore, query, where } from "firebase/firestore";
 
 /**
  * PollBox Component
@@ -11,11 +8,9 @@ import { collection, getDocs, getDoc, doc, getFirestore, query, where } from "fi
  *
  * @param {string} postId - Unique identifier for the post containing this poll
  * @param {Array} initialOptions - Array of poll options with labels and vote counts
+ * @param {Function} refreshPosts - Callback function to refresh post data after voting
  */
-export default function PollBox({ postId, initialOptions }) {
-  // Access the Posts refresh functionality
-  const { refreshPosts } = usePostsRefresh();
-  
+export default function PollBox({ postId, initialOptions, refreshPosts }) {
   // State to track if the current user has voted on this poll
   const [hasVoted, setHasVoted] = useState(false);
 
@@ -23,32 +18,7 @@ export default function PollBox({ postId, initialOptions }) {
   const [voting, setVoting] = useState(false);
 
   // Local copy of poll options that updates when initialOptions change
-    const [currentOptions, setCurrentOptions] = useState(initialOptions);
-
-    // get currently logged in user
-    const { user: currentUser } = useAuth();
-
-    // checks if user has already voted on a particular poll or was creator of poll
-    // and if true does not let them vote
-    useEffect(() => {
-        const checkHasVoted = async () => {
-            if (currentUser) {
-                const db = getFirestore();
-                const docRef = doc(db, "posts", postId);
-                const docSnap = await getDoc(docRef);
-
-                if (docSnap.exists()) {
-                    const votersArray = docSnap.data().voters;
-                    if (votersArray.includes(currentUser.uid) || docSnap.data().authorId === currentUser.uid) {
-                        setHasVoted(true);
-                    } else {
-                        setHasVoted(false);
-                    }
-                }
-            }
-        };
-        checkHasVoted();
-    });
+  const [currentOptions, setCurrentOptions] = useState(initialOptions);
 
   /**
    * Effect to update local options when parent component refreshes data
@@ -95,8 +65,8 @@ export default function PollBox({ postId, initialOptions }) {
       // Send vote request to backend API
       const res = await fetch(`/api/posts/${postId}/vote`, {
         method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ optionIndex, authorId:currentUser?.uid ?? null }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ optionIndex }),
       });
 
       console.log("Vote response status:", res.status);
@@ -110,18 +80,10 @@ export default function PollBox({ postId, initialOptions }) {
 
       console.log("Vote successful, refreshing posts...");
 
-      // Refresh post data to sync with backend first
-      await refreshPosts();
-
-      console.log("Posts refreshed, updating UI to show results...");
-
-      // Only after successful refresh, update local state and show results
-      const updatedOptions = [...currentOptions];
-      updatedOptions[optionIndex] = {
-        ...updatedOptions[optionIndex],
-        votes: (updatedOptions[optionIndex].votes || 0) + 1,
-      };
-      setCurrentOptions(updatedOptions);
+      // Refresh post data to get updated vote counts
+      if (refreshPosts) {
+        await refreshPosts();
+      }
 
       // Update UI to show results instead of voting options
       setHasVoted(true);
@@ -202,7 +164,7 @@ export default function PollBox({ postId, initialOptions }) {
 
       {/* Loading indicator during vote submission */}
       {voting && (
-        <div className="text-xs text-pink-500">Submitting vote...</div>
+        <div className="text-xs text-blue-500">Submitting vote...</div>
       )}
     </div>
   );
