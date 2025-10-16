@@ -42,9 +42,9 @@ const ProfilePage = () => {
       {/* Profile Header */}
       <div className="flex items-center space-x-6">
         <img
-          src={user.photoURL || "https://via.placeholder.com/100"}
+          src={user.photoURL || "/images/noPfp.jpg"} // use project placeholder
           alt="Profile"
-          className="w-28 h-28 rounded-full border-2 border-gray-300"
+          className="w-28 h-28 rounded-full border-2 border-gray-300 object-cover" // larger and correctly scaled
         />
         <div>
           <h2 className="text-3xl font-bold">{user.displayName || "Anonymous User"}</h2>
