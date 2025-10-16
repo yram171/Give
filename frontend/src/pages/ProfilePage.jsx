@@ -26,9 +26,9 @@ const ProfilePage = () => {
   if (!user) {
     return (
       <div className="text-center p-6">
-        <h2>Please log in to view your profile.</h2>
+        <h2 className="text-lg">Please log in to view your profile.</h2>
         <button
-          className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-xl"
+          className="mt-4 px-6 py-3 bg-blue-500 text-white rounded-xl text-lg"
           onClick={() => navigate("/login")}
         >
           Go to Login
@@ -38,41 +38,44 @@ const ProfilePage = () => {
   }
 
   return (
-    <div className="max-w-3xl mx-auto mt-8 p-6 bg-white shadow-xl rounded-2xl">
-      <div className="flex items-center space-x-4">
+    <div className="max-w-5xl mx-auto mt-12 p-8 bg-white shadow-xl rounded-2xl">
+      {/* Profile Header */}
+      <div className="flex items-center space-x-6">
         <img
           src={user.photoURL || "https://via.placeholder.com/100"}
           alt="Profile"
-          className="w-20 h-20 rounded-full border"
+          className="w-28 h-28 rounded-full border-2 border-gray-300"
         />
         <div>
-          <h2 className="text-2xl font-bold">{user.displayName || "Anonymous User"}</h2>
-          <p className="text-gray-600">{user.email}</p>
+          <h2 className="text-3xl font-bold">{user.displayName || "Anonymous User"}</h2>
+          <p className="text-gray-600 text-lg">{user.email}</p>
         </div>
       </div>
 
-      <hr className="my-6" />
+      <hr className="my-8" />
 
-      <h3 className="text-xl font-semibold mb-4">Your Posts</h3>
+      {/* User Posts */}
+      <h3 className="text-2xl font-semibold mb-6">Your Posts</h3>
       {posts.length === 0 ? (
-        <p className="text-gray-500">You haven’t posted anything yet.</p>
+        <p className="text-gray-500 text-lg">You haven’t posted anything yet.</p>
       ) : (
-        <div className="space-y-3">
+        <div className="space-y-4">
           {posts.map((post) => (
             <div
               key={post.id}
-              className="p-4 bg-gray-100 rounded-xl hover:bg-gray-200 cursor-pointer"
+              className="p-6 bg-gray-100 rounded-xl hover:bg-gray-200 cursor-pointer"
               onClick={() => navigate(`/post/${post.id}`)}
             >
-              <h4 className="font-bold">{post.title}</h4>
-              <p className="text-gray-600 text-sm">{post.content?.slice(0, 80)}...</p>
+              <h4 className="font-bold text-lg">{post.title}</h4>
+              <p className="text-gray-700 text-base">{post.content?.slice(0, 120)}...</p>
             </div>
           ))}
         </div>
       )}
 
+      {/* Edit Profile Button */}
       <button
-        className="mt-8 px-4 py-2 bg-pink-500 text-white rounded-xl"
+        className="mt-8 px-6 py-3 bg-yellow-400 hover:bg-yellow-500 text-black rounded-xl text-lg font-semibold"
         onClick={() => alert("Edit Profile coming soon!")}
       >
         Edit Profile

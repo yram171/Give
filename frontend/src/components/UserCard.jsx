@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { useNavigate } from "react-router-dom";
 
 /**
  * UserCard component displays a user's avatar, name, and group.
@@ -8,12 +9,16 @@ import clsx from "clsx";
  * @param {Object} props.group - Group object containing group information
  */
 const UserCard = ({ user, group }) => {
+  const navigate = useNavigate();
   const name = user?.name;
   const profilePic = user?.profilePic || "/images/noPfp.jpg";
   const groupName = group?.name;
 
   return (
-    <div className="grid grid-cols-[min-content_auto_min-content] w-full bg-gray-100 rounded-xl">
+    <div
+      className="grid grid-cols-[min-content_auto_min-content] w-full bg-gray-100 rounded-xl cursor-pointer"
+      onClick={() => navigate(`/profile/${user?.id || user?.uid || ""}`)} 
+    >
       <div
         className="w-14 h-14 rounded-full bg-cover bg-center bg-no-repeat flex items-center justify-center"
         style={{ backgroundImage: `url(${profilePic})` }}
