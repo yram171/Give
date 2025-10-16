@@ -257,7 +257,7 @@ function NavBar() {
             )}
           >
             <img
-              src={profilePic}
+              src={user?.photoURL || "/images/noPfp.jpg"} // use proper placeholder
               alt={`${displayName} Avatar`}
               className="w-full h-full rounded-full object-cover"
             />
