@@ -68,6 +68,7 @@ exports.createPost = async (req, res) => {
         : [],
         group,
       voters: [],
+      commentRefs: [],
       expiryOption,
       expiresAt, // used for countdown, filtering, and optional TTL deletion
       createdAt: admin.firestore.FieldValue.serverTimestamp(),
