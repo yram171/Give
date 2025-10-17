@@ -16,6 +16,8 @@ import CreateAccount from "./pages/CreateAccount";
 import { AuthProvider } from './contexts/AuthContext';
 import RequireAuth from './components/RequireAuth';
 import Group from "./pages/Group";
+import ProfilePage from "./pages/ProfilePage";
+
 
 /**
  * Fetch post data from the backend API.
@@ -85,8 +87,12 @@ function App() {
       },
       {
         path: "/group/:groupId",
-          element: <RequireAuth><Group postData={postData} /></RequireAuth>,
+        element: <RequireAuth><Group postData={postData} /></RequireAuth>,
       },
+      {
+      path: "/profile",
+      element: <RequireAuth><ProfilePage /></RequireAuth>,
+    },
     ],
     },
   ]);
