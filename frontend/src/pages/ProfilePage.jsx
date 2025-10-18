@@ -12,7 +12,7 @@ import RequireAuth from '../components/RequireAuth';
  * Home page component.
  * @returns {JSX.Element}
  */
-export default function PScreen() {
+export default function ProfileScreen() {
     const [currentTab, setCurrentTab] = useState("profile");
 
     const showCreate = currentTab === "create";
