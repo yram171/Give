@@ -16,7 +16,7 @@ import CreateAccount from "./pages/CreateAccount";
 import { AuthProvider } from './contexts/AuthContext';
 import RequireAuth from './components/RequireAuth';
 import Group from "./pages/Group";
-import ProfilePage from "./pages/ProfilePage";
+import ProfileScreen from "./pages/ProfilePage";
 
 
 /**
@@ -91,7 +91,7 @@ function App() {
       },
       {
       path: "/profile",
-      element: <RequireAuth><ProfilePage /></RequireAuth>,
+      element: <ProfileScreen />,
     },
     ],
     },

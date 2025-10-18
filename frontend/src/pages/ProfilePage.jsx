@@ -1,87 +1,42 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { getAuth } from "firebase/auth";
-import { getFirestore, collection, query, where, getDocs } from "firebase/firestore";
+/**
+ * Home page component.
+ */
+import React, { useState } from "react";
+import AppLayout from "../layouts/AppLayout";
+import LeftSidebar from "../components/LeftSideBar";
+import { SuggestedBox, GroupSearch, CreatePost, CreateGroup, Profile } from "../";
+import { profileTabConfig } from "../config/tabConfig";
+import RequireAuth from '../components/RequireAuth';
 
-const ProfilePage = () => {
-  const auth = getAuth();
-  const db = getFirestore();
-  const navigate = useNavigate();
-  const user = auth.currentUser;
+/**
+ * Home page component.
+ * @returns {JSX.Element}
+ */
+export default function ProfileScreen() {
+    const [currentTab, setCurrentTab] = useState("profile");
 
-  const [posts, setPosts] = useState([]);
+    const showCreate = currentTab === "create";
 
-  useEffect(() => {
-    const fetchUserPosts = async () => {
-      if (!user) return;
-      const postsRef = collection(db, "posts");
-      const q = query(postsRef, where("authorId", "==", user.uid));
-      const querySnapshot = await getDocs(q);
-      setPosts(querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
-    };
+    const showCreateGroup = currentTab === "createGroup";
 
-    fetchUserPosts();
-  }, [user, db]);
-
-  if (!user) {
     return (
-      <div className="text-center p-6">
-        <h2 className="text-lg">Please log in to view your profile.</h2>
-        <button
-          className="mt-4 px-6 py-3 bg-blue-500 text-white rounded-xl text-lg"
-          onClick={() => navigate("/login")}
-        >
-          Go to Login
-        </button>
-      </div>
-    );
-  }
-
-  return (
-    <div className="max-w-5xl mx-auto mt-12 p-8 bg-white shadow-xl rounded-2xl">
-      {/* Profile Header */}
-      <div className="flex items-center space-x-6">
-        <img
-          src={user.photoURL || "/images/noPfp.jpg"} // use project placeholder
-          alt="Profile"
-          className="w-28 h-28 rounded-full border-2 border-gray-300 object-cover" // larger and correctly scaled
+        <AppLayout
+            left={
+                <LeftSidebar
+                    screenTabProps={{
+                        tabConfig: profileTabConfig,
+                        onTabChange: setCurrentTab,
+                        onCurrentTab: currentTab,
+                    }}
+                    extra={<SuggestedBox />}
+                />
+            }
+            center={
+                showCreate ? <CreatePost /> : <RequireAuth><Profile/></RequireAuth>
+            }
+            right={
+                showCreateGroup ? <CreateGroup /> : <GroupSearch />
+            }
         />
-        <div>
-          <h2 className="text-3xl font-bold">{user.displayName || "Anonymous User"}</h2>
-          <p className="text-gray-600 text-lg">{user.email}</p>
-        </div>
-      </div>
-
-      <hr className="my-8" />
-
-      {/* User Posts */}
-      <h3 className="text-2xl font-semibold mb-6">Your Posts</h3>
-      {posts.length === 0 ? (
-        <p className="text-gray-500 text-lg">You haven’t posted anything yet.</p>
-      ) : (
-        <div className="space-y-4">
-          {posts.map((post) => (
-            <div
-              key={post.id}
-              className="p-6 bg-gray-100 rounded-xl hover:bg-gray-200 cursor-pointer"
-              onClick={() => navigate(`/post/${post.id}`)}
-            >
-              <h4 className="font-bold text-lg">{post.title}</h4>
-              <p className="text-gray-700 text-base">{post.content?.slice(0, 120)}...</p>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {/* Edit Profile Button */}
-      <button
-        className="mt-8 px-6 py-3 bg-yellow-400 hover:bg-yellow-500 text-black rounded-xl text-lg font-semibold"
-        onClick={() => alert("Edit Profile coming soon!")}
-      >
-        Edit Profile
-      </button>
-    </div>
-  );
-};
-
-export default ProfilePage;
+    );
+}

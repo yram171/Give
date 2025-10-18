@@ -63,7 +63,7 @@ export default function CommentForm({ currentUser, onSubmit, submitting }) {
           <button
             type="submit"
             disabled={submitting}
-            className="px-4 py-1.5 rounded-full bg-defaultYellow text-black text-sm font-semibold disabled:opacity-60"
+                      className="px-4 py-1.5 rounded-full bg-defaultYellow hover:bg-yellow-400 text-black text-sm font-semibold disabled:opacity-60 hover:bg-yellow-400 "
           >
             {submitting ? "Posting…" : "Post"}
           </button>
